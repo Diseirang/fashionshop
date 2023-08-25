@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 import '../model/user.dart';
-import '../fragments/dashboard.dart';
+import '../fragments/dashboard_screen.dart';
 import 'signup_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -50,7 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
             passwordController.clear();
           });
 
-          Future.delayed(const Duration(milliseconds: 2000), () {
+          Future.delayed(const Duration(milliseconds: 1000), () {
             Get.to(DashboardScreen());
           });
         } else {
@@ -115,6 +115,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 children: [
                                   //phone
                                   TextFormField(
+                                    keyboardType: TextInputType.phone,
                                     controller: phoneController,
                                     validator: (value) => value == ""
                                         ? "Please enter your phone number"
@@ -168,6 +169,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                   // password
                                   Obx(
                                     () => TextFormField(
+                                    keyboardType: TextInputType.text,
+
                                       obscureText: isObsecure.value,
                                       controller: passwordController,
                                       validator: (value) => value == ""

@@ -1,5 +1,7 @@
 class API {
-  static const hostConnect = "http://10.21.0.18:8080/api_fashionshop/";
+  // static const hostConnect = "http://10.21.0.18:8080/api_fashionshop/";
+  static const hostConnect = "http://192.168.0.109:80/api_fashionshop";
+
   static const hostConnectUser = "$hostConnect/user";
 
   //signup user

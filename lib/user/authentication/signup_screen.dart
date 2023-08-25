@@ -43,7 +43,7 @@ class _SignupScreenState extends State<SignupScreen> {
         }
       }
     } catch (e) {
-      //print(e.toString());
+      // print(e.toString());
       Fluttertoast.showToast(msg: e.toString());
     }
   }
@@ -76,7 +76,7 @@ class _SignupScreenState extends State<SignupScreen> {
           });
 
           // push user to dashboard
-          Future.delayed(const Duration(milliseconds: 2000), () {
+          Future.delayed(const Duration(milliseconds: 1000), () {
             Get.to(const LoginScreen());
           });
         } else {
