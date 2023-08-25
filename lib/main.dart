@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 
-import 'presentation/login_screen.dart';
+import 'user/authentication/login_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: FutureBuilder(builder: (context, dataSnapShot){
+      home: FutureBuilder(builder: (context, dataSnapShot) {
         return const LoginScreen();
       }),
     );

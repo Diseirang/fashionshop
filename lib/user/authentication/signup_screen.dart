@@ -7,7 +7,6 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 import '../model/user.dart';
-import 'dashboard_screen.dart';
 import 'login_screen.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -66,16 +65,20 @@ class _SignupScreenState extends State<SignupScreen> {
         var resBodyOfSignUp = jsonDecode(res.body);
 
         if (resBodyOfSignUp['success'] == true) {
-          // clear text field
-          userNameController.clear();
-          phoneController.clear();
-          passwordController.clear();
-
           Fluttertoast.showToast(
               msg: 'Congratulation, you are SignUp Successfully.');
 
+          setState(() {
+            // clear text field
+            userNameController.clear();
+            phoneController.clear();
+            passwordController.clear();
+          });
+
           // push user to dashboard
-          Get.to(const DashboardScreen());
+          Future.delayed(const Duration(milliseconds: 2000), () {
+            Get.to(const LoginScreen());
+          });
         } else {
           Fluttertoast.showToast(msg: 'Error Occured. Try Again.');
         }
@@ -117,7 +120,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     padding: const EdgeInsets.all(16),
                     child: Container(
                       decoration: const BoxDecoration(
-                          color: Colors.grey,
+                          color: Colors.white70,
                           borderRadius: BorderRadius.only(
                             topRight: Radius.circular(30),
                             bottomLeft: Radius.circular(30),
@@ -316,7 +319,9 @@ class _SignupScreenState extends State<SignupScreen> {
                                     borderRadius: BorderRadius.circular(25),
                                     child: InkWell(
                                       onTap: () {
-                                        validatePhoneNumber();
+                                        if (formKey.currentState!.validate()) {
+                                          validatePhoneNumber();
+                                        }
                                       },
                                       borderRadius: BorderRadius.circular(25),
                                       child: const Padding(
