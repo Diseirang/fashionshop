@@ -27,19 +27,19 @@ class _SignupScreenState extends State<SignupScreen> {
       var res = await http.post(
         Uri.parse(API.validatePhone),
         body: {
-          'phone': phoneController.text.trim().toString(),
+          'user_phone': phoneController.text.trim().toString(),
         },
       );    
       if (res.statusCode == 200) {
-        // var resBodyOfValidatePhone = jsonDecode(res.body);
+        var resBodyOfValidatePhone = jsonDecode(res.body);
       
-        // if (resBodyOfValidatePhone['phoneFound'] == true) {
-        //   Fluttertoast.showToast(
-        //       msg: 'This phone number is use by someone. Try another one!');
-        // } else {
+        if (resBodyOfValidatePhone['phoneFound'] == true) {
+          Fluttertoast.showToast(
+              msg: 'This phone number is use by someone. Try another one!');
+        } else {
           registeredAndSavedUserRevord();
-          // Fluttertoast.showToast(msg: 'Your acount is created successfully!');
-        // }
+          Fluttertoast.showToast(msg: 'Your acount is created successfully!');
+        }
       }
     } catch (e) {
       //print(e.toString());
@@ -74,7 +74,7 @@ class _SignupScreenState extends State<SignupScreen> {
         }
       }
     } catch (e) {
-      print(e.toString());
+      // print(e.toString());
       Fluttertoast.showToast(
         msg: e.toString(),
       );
