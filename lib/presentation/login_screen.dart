@@ -1,84 +1,67 @@
 import 'dart:convert';
 
 import 'package:fashionshop/api_connection/api_connection.dart';
-import 'package:fashionshop/user/model/user.dart';
-import 'package:fashionshop/user/presentation/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
-class SignupScreen extends StatefulWidget {
-  const SignupScreen({super.key});
+import 'dashboard_screen.dart';
+import 'signup_screen.dart';
+
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
 
   @override
-  State<SignupScreen> createState() => _SignupScreenState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _SignupScreenState extends State<SignupScreen> {
+class _LoginScreenState extends State<LoginScreen> {
   var formKey = GlobalKey<FormState>();
-  var userNameController = TextEditingController();
   var phoneController = TextEditingController();
   var passwordController = TextEditingController();
   var isObsecure = true.obs;
 
-  validateUserAndPhoneNumber() async {
+  validateUsernameAndPassword() async {
     try {
-      var res = await http.post(
+      var resPhonenumber = await http.post(
         Uri.parse(API.validatePhone),
-        body: {
-          'user_phone': phoneController.text.trim().toString(),
-        },
-      );    
-      if (res.statusCode == 200) {
-        var resBodyOfValidatePhone = jsonDecode(res.body);
-      
-        if (resBodyOfValidatePhone['phoneFound'] == true) {
-          Fluttertoast.showToast(
-              msg: 'This phone number is use by someone. Try another one!');
+        body: {'user_phone': phoneController.text.trim().toString()},
+      );
+
+      var resPassword = await http.post(
+        Uri.parse(API.validatePassword),
+        body: {'user_password': passwordController.text.trim().toString()},
+      );
+
+      if (resPassword.statusCode == 200 && resPhonenumber.statusCode == 200) {
+        var resBodyOfValidatePhonenumber = jsonDecode(resPhonenumber.body);
+        var resBodyOfValidatePassword = jsonDecode(resPassword.body);
+
+        if (resBodyOfValidatePassword['passwordFound'] == true &&
+            resBodyOfValidatePhonenumber['phoneFound'] == true) {
+          Fluttertoast.showToast(msg: 'Welcome to FashionShop');
+
+          //clear text field
+          phoneController.clear();
+          passwordController.clear();
+
+          Get.to(const DashboardScreen());
         } else {
-          registeredAndSavedUserRevord();
-          Fluttertoast.showToast(msg: 'Your acount is created successfully!');
+          Fluttertoast.showToast(
+              msg: 'Invalid phone number or password. Try Again.');
         }
       }
     } catch (e) {
-      //print(e.toString());
-      Fluttertoast.showToast(
-        msg: e.toString(),
-      );
+      Fluttertoast.showToast(msg: e.toString());
     }
   }
 
-  registeredAndSavedUserRevord() async {
-    User userModel = User(
-      1,
-      userNameController.text,
-      phoneController.text,
-      passwordController.text,
-    );
-    try {
-      var res = await http.post(
-        Uri.parse(API.signUp),
-        body: userModel.toJson(),
-      );
-
-      if (res.statusCode == 200) {
-        var resBodyOfSignUp = jsonDecode(res.body);
-
-        if (resBodyOfSignUp['success'] == true) 
-        {
-          Fluttertoast.showToast(msg: 'Congratulation, you are SignUp Successfully.');
-        } else 
-        {
-          Fluttertoast.showToast(msg: 'Error Occured. Try Again.');
-        }
-      }
-    } catch (e) {
-      // print(e.toString());
-      Fluttertoast.showToast(
-        msg: e.toString(),
-      );
-    }
+  @override
+  void dispose() {
+    phoneController.dispose();
+    passwordController.dispose();
+    super.dispose();
   }
 
   @override
@@ -94,19 +77,20 @@ class _SignupScreenState extends State<SignupScreen> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  // Signup screen header
+                  // login screen header
                   SizedBox(
                     height: 285,
                     width: MediaQuery.of(context).size.width,
-                    child: Image.asset('assets/Signup.jpg'),
+                    child: Image.asset('assets/Login.jpg'),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(16),
                     child: Container(
                       decoration: const BoxDecoration(
                           color: Colors.grey,
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(50),
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(30),
+                            bottomRight: Radius.circular(30),
                           ),
                           boxShadow: [
                             BoxShadow(
@@ -123,58 +107,6 @@ class _SignupScreenState extends State<SignupScreen> {
                               key: formKey,
                               child: Column(
                                 children: [
-                                  //username
-                                  TextFormField(
-                                    controller: userNameController,
-                                    validator: (value) => value == ""
-                                        ? "Please enter your username"
-                                        : null,
-                                    decoration: InputDecoration(
-                                      prefixIcon: const Icon(
-                                        Icons.person,
-                                        color: Colors.blue,
-                                      ),
-                                      hintText: 'Username',
-                                      hintStyle:
-                                          const TextStyle(color: Colors.blue),
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(
-                                          25,
-                                        ),
-                                        borderSide: const BorderSide(
-                                            color: Colors.white),
-                                      ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(
-                                          25,
-                                        ),
-                                        borderSide: const BorderSide(
-                                            color: Colors.white),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(
-                                          25,
-                                        ),
-                                        borderSide: const BorderSide(
-                                            color: Colors.white),
-                                      ),
-                                      disabledBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(
-                                          25,
-                                        ),
-                                        borderSide: const BorderSide(
-                                            color: Colors.white),
-                                      ),
-                                      contentPadding:
-                                          const EdgeInsets.symmetric(
-                                              horizontal: 20, vertical: 6),
-                                      fillColor: Colors.white,
-                                      filled: true,
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    height: 15,
-                                  ),
                                   //phone
                                   TextFormField(
                                     controller: phoneController,
@@ -301,7 +233,9 @@ class _SignupScreenState extends State<SignupScreen> {
                                     color: Colors.blue,
                                     borderRadius: BorderRadius.circular(25),
                                     child: InkWell(
-                                      onTap: validateUserAndPhoneNumber,
+                                      onTap: () {
+                                        validateUsernameAndPassword();
+                                      },
                                       borderRadius: BorderRadius.circular(25),
                                       child: const Padding(
                                         padding: EdgeInsets.symmetric(
@@ -309,8 +243,9 @@ class _SignupScreenState extends State<SignupScreen> {
                                           vertical: 10,
                                         ),
                                         child: Text(
-                                          'Signup',
+                                          'Login',
                                           style: TextStyle(
+                                            fontWeight: FontWeight.bold,
                                             color: Colors.white,
                                             fontSize: 16,
                                           ),
@@ -327,13 +262,13 @@ class _SignupScreenState extends State<SignupScreen> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                const Text("Already have an account?"),
+                                const Text("Don't have an account?"),
                                 TextButton(
                                   onPressed: () {
-                                    Get.to(const LoginScreen());
+                                    Get.to(const SignupScreen());
                                   },
                                   child: const Text(
-                                    'Login Here',
+                                    'Register Here',
                                     style: TextStyle(
                                       color: Colors.purpleAccent,
                                     ),
@@ -341,6 +276,25 @@ class _SignupScreenState extends State<SignupScreen> {
                                 ),
                               ],
                             ),
+                            // const Text(
+                            //   'OR',
+                            //   style: TextStyle(color: Colors.white),
+                            // ),
+                            // Row(
+                            //   mainAxisAlignment: MainAxisAlignment.center,
+                            //   children: [
+                            //     const Text("Are you admin?"),
+                            //     TextButton(
+                            //       onPressed: () {},
+                            //       child: const Text(
+                            //         'Click Here',
+                            //         style: TextStyle(
+                            //           color: Colors.purpleAccent,
+                            //         ),
+                            //       ),
+                            //     ),
+                            //   ],
+                            // ),
                           ],
                         ),
                       ),

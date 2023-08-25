@@ -1,6 +1,7 @@
-import 'package:fashionshop/user/presentation/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/get_navigation.dart';
+
+import 'presentation/login_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
