@@ -97,8 +97,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   Text(
                     'User Login',
-                    style: getBoldStyle(
-                        fontSize: AppSize.s28, color: Colors.blue),
+                    style:
+                        getBoldStyle(fontSize: AppSize.s28, color: Colors.blue),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(16),

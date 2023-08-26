@@ -1,15 +1,16 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:fashionshop/admin/admin_screen.dart';
+import 'package:fashionshop/api_connection/api_connection.dart';
+import 'package:fashionshop/presentation/resource/style_manager.dart';
+import 'package:fashionshop/presentation/resource/textbox_manager.dart';
+import 'package:fashionshop/presentation/resource/value_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 
-import '../api_connection/api_connection.dart';
-import '../presentation/resource/textbox_manager.dart';
-import '../resource/style_manager.dart';
 import 'admin_get_order.dart';
 
 class AdminUploadScreen extends StatefulWidget {
@@ -21,7 +22,7 @@ class AdminUploadScreen extends StatefulWidget {
 
 class _AdminUploadScreenState extends State<AdminUploadScreen> {
   final ImagePicker _picker = ImagePicker();
-  XFile? pickedImageXFile;
+  XFile? _pickedImageXFile;
 
   var formKey = GlobalKey<FormState>();
   var nameController = TextEditingController();
@@ -35,19 +36,19 @@ class _AdminUploadScreenState extends State<AdminUploadScreen> {
 
   //defaultScreen methods
   captureImageWithPhoneCamera() async {
-    pickedImageXFile = await _picker.pickImage(source: ImageSource.camera);
+    _pickedImageXFile = await _picker.pickImage(source: ImageSource.camera);
 
     Get.back();
 
-    setState(() => pickedImageXFile);
+    setState(() => _pickedImageXFile);
   }
 
   pickImageFromPhoneGallery() async {
-    pickedImageXFile = await _picker.pickImage(source: ImageSource.gallery);
+    _pickedImageXFile = await _picker.pickImage(source: ImageSource.gallery);
 
     Get.back();
 
-    setState(() => pickedImageXFile);
+    setState(() => _pickedImageXFile);
   }
 
   showDialogBoxForImagePickingAndCapturing() {
@@ -74,6 +75,9 @@ class _AdminUploadScreenState extends State<AdminUploadScreen> {
                     color: Colors.grey,
                   ),
                 ),
+              ),
+              const SizedBox(
+                height: AppSize.s12,
               ),
               SimpleDialogOption(
                 onPressed: () {
@@ -156,10 +160,13 @@ class _AdminUploadScreenState extends State<AdminUploadScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(
-                Icons.add_photo_alternate,
-                color: Colors.white54,
-                size: 200,
+              InkWell(
+                onTap: () => showDialogBoxForImagePickingAndCapturing(),
+                child: const Icon(
+                  Icons.add_photo_alternate,
+                  color: Colors.white54,
+                  size: 200,
+                ),
               ),
 
               //button
@@ -167,9 +174,7 @@ class _AdminUploadScreenState extends State<AdminUploadScreen> {
                 color: Colors.black38,
                 borderRadius: BorderRadius.circular(30),
                 child: InkWell(
-                  onTap: () {
-                    showDialogBoxForImagePickingAndCapturing();
-                  },
+                  onTap: () => showDialogBoxForImagePickingAndCapturing(),
                   borderRadius: BorderRadius.circular(30),
                   child: const Padding(
                     padding: EdgeInsets.symmetric(
@@ -196,15 +201,17 @@ class _AdminUploadScreenState extends State<AdminUploadScreen> {
   //uploadItemFormScreen methods
   uploadItemImage() async {
     var requestImgurApi = http.MultipartRequest(
-        "POST", Uri.parse("https://api.imgur.com/3/image"));
+      "POST",
+      Uri.parse("https://api.imgur.com/3/image"),
+    );
 
     String imageName = DateTime.now().millisecondsSinceEpoch.toString();
     requestImgurApi.fields['title'] = imageName;
-    requestImgurApi.headers['Authorization'] = "Client-ID" "6ca0d6456311e4d";
+    requestImgurApi.headers['Authorization'] = "Client-ID c25a666b1ceca80";
 
     var imageFile = await http.MultipartFile.fromPath(
       'image',
-      pickedImageXFile!.path,
+      _pickedImageXFile!.path,
       filename: imageName,
     );
 
@@ -216,7 +223,10 @@ class _AdminUploadScreenState extends State<AdminUploadScreen> {
 
     Map<String, dynamic> jsonRes = json.decode(resultFromImgurApi);
     imageLink = (jsonRes["data"]["link"]).toString();
+
     // String deleteHash = (jsonRes["data"]["deletehash"]).toString();
+    // print(imageLink);
+    // print(deleteHash);
 
     saveItemInfoToDatabase();
   }
@@ -246,10 +256,10 @@ class _AdminUploadScreenState extends State<AdminUploadScreen> {
         var resBodyOfUploadItem = jsonDecode(response.body);
 
         if (resBodyOfUploadItem['success'] == true) {
-          Fluttertoast.showToast(msg: "New item uploaded successfully");
+          Fluttertoast.showToast(msg: "New item uploaded successfully!");
 
           setState(() {
-            pickedImageXFile = null;
+            _pickedImageXFile = null;
             nameController.clear();
             ratingController.clear();
             tagsController.clear();
@@ -292,7 +302,7 @@ class _AdminUploadScreenState extends State<AdminUploadScreen> {
         leading: IconButton(
           onPressed: () {
             setState(() {
-              pickedImageXFile = null;
+              _pickedImageXFile = null;
               nameController.clear();
               ratingController.clear();
               tagsController.clear();
@@ -311,8 +321,7 @@ class _AdminUploadScreenState extends State<AdminUploadScreen> {
         actions: [
           TextButton(
             onPressed: () {
-              Fluttertoast.showToast(msg: "Uploading now...");
-
+              Fluttertoast.showToast(msg: "Now uploading...");
               uploadItemImage();
             },
             child: const Text(
@@ -333,7 +342,7 @@ class _AdminUploadScreenState extends State<AdminUploadScreen> {
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: FileImage(
-                  File(pickedImageXFile!.path),
+                  File(_pickedImageXFile!.path),
                 ),
                 fit: BoxFit.cover,
               ),
@@ -368,6 +377,7 @@ class _AdminUploadScreenState extends State<AdminUploadScreen> {
                         children: [
                           //item name
                           TextFormField(
+                            keyboardType: TextInputType.name,
                             controller: nameController,
                             validator: (val) =>
                                 val == "" ? "Please write item name" : null,
@@ -394,6 +404,7 @@ class _AdminUploadScreenState extends State<AdminUploadScreen> {
 
                           //item ratings
                           TextFormField(
+                            keyboardType: TextInputType.number,
                             controller: ratingController,
                             validator: (val) =>
                                 val == "" ? "Please give item rating" : null,
@@ -420,6 +431,7 @@ class _AdminUploadScreenState extends State<AdminUploadScreen> {
 
                           //item tags
                           TextFormField(
+                            keyboardType: TextInputType.text,
                             controller: tagsController,
                             validator: (val) =>
                                 val == "" ? "Please write item tags" : null,
@@ -446,6 +458,7 @@ class _AdminUploadScreenState extends State<AdminUploadScreen> {
 
                           //item price
                           TextFormField(
+                            keyboardType: TextInputType.number,
                             controller: priceController,
                             validator: (val) =>
                                 val == "" ? "Please write item price" : null,
@@ -472,6 +485,7 @@ class _AdminUploadScreenState extends State<AdminUploadScreen> {
 
                           //item sizes
                           TextFormField(
+                            keyboardType: TextInputType.text,
                             controller: sizesController,
                             validator: (val) =>
                                 val == "" ? "Please write item sizes" : null,
@@ -498,6 +512,7 @@ class _AdminUploadScreenState extends State<AdminUploadScreen> {
 
                           //item colors
                           TextFormField(
+                            keyboardType: TextInputType.text,
                             controller: colorsController,
                             validator: (val) =>
                                 val == "" ? "Please write item colors" : null,
@@ -524,6 +539,7 @@ class _AdminUploadScreenState extends State<AdminUploadScreen> {
 
                           //item description
                           TextFormField(
+                            keyboardType: TextInputType.text,
                             controller: descriptionController,
                             validator: (val) => val == ""
                                 ? "Please write item description"
@@ -597,6 +613,6 @@ class _AdminUploadScreenState extends State<AdminUploadScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return pickedImageXFile == null ? defaultScreen() : uploadItemFormScreen();
+    return _pickedImageXFile == null ? defaultScreen() : uploadItemFormScreen();
   }
 }

@@ -19,11 +19,13 @@ class DashboardScreen extends StatefulWidget {
 class _DashboardScreenState extends State<DashboardScreen> {
   final CurrentUser _remeberCurrentUser = Get.put(CurrentUser());
 
+  final RxInt _indexNumber = 0.obs;
+
   final List<Widget> _fragmentScreen = [
     const HomeScreen(),
     const FavoritesScreen(),
     const OrderScreen(),
-      ProfileScreen(),
+    ProfileScreen(),
   ];
 
   final List _navigationButtonsProperties = [
@@ -49,8 +51,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
     },
   ];
 
-  final RxInt _indexNumber = 0.obs;
-
   @override
   Widget build(BuildContext context) {
     return GetBuilder(
@@ -70,7 +70,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               showUnselectedLabels: true,
               selectedItemColor: Colors.white,
               unselectedItemColor: Colors.white24,
-              items: List.generate(4, (index) {
+              items: List.generate(_fragmentScreen.length, (index) {
                 var navBtnProperty = _navigationButtonsProperties[index];
                 return BottomNavigationBarItem(
                     backgroundColor: ColorManager.primary,

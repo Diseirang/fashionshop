@@ -9,7 +9,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import '../presentation/resource/value_manager.dart';
-import 'admin_upload.dart';
+import 'admin_upload_item.dart';
 
 class AdminLoginScreen extends StatefulWidget {
   const AdminLoginScreen({super.key});
@@ -29,8 +29,8 @@ class _AdminLoginScreenState extends State<AdminLoginScreen> {
       var resAdminData = await http.post(
         Uri.parse(API.adminlogin),
         body: {
-          'admin_name': phoneController.text.trim(),
-          'admin_password': phoneController.text.trim(),
+          'admin_phone': phoneController.text.trim().toString(),
+          'admin_password': phoneController.text.trim().toString(),
         },
       );
 
@@ -51,7 +51,7 @@ class _AdminLoginScreenState extends State<AdminLoginScreen> {
           });
         } else {
           Fluttertoast.showToast(
-              msg: 'Invalid phone number or password. Try Again.');
+              msg: 'Invalid phone number or password.\nTry Again.');
         }
       }
     } catch (e) {
