@@ -1,6 +1,9 @@
 import 'dart:convert';
 
 import 'package:fashionshop/api_connection/api_connection.dart';
+import 'package:fashionshop/presentation/resource/color_manager.dart';
+import 'package:fashionshop/presentation/resource/style_manager.dart';
+import 'package:fashionshop/presentation/resource/textbox_manager.dart';
 import 'package:fashionshop/user/userPrefereences/user_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -51,7 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
           });
 
           Future.delayed(const Duration(milliseconds: 1000), () {
-            Get.to(DashboardScreen());
+            Get.to(const DashboardScreen());
           });
         } else {
           Fluttertoast.showToast(
@@ -126,40 +129,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                         color: Colors.blue,
                                       ),
                                       hintText: 'Phone Number',
-                                      hintStyle:
-                                          const TextStyle(color: Colors.blue),
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(
-                                          25,
-                                        ),
-                                        borderSide: const BorderSide(
-                                            color: Colors.white),
-                                      ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(
-                                          25,
-                                        ),
-                                        borderSide: const BorderSide(
-                                            color: Colors.white),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(
-                                          25,
-                                        ),
-                                        borderSide: const BorderSide(
-                                            color: Colors.white),
-                                      ),
-                                      disabledBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(
-                                          25,
-                                        ),
-                                        borderSide: const BorderSide(
-                                            color: Colors.white),
-                                      ),
+                                      hintStyle: hintStyle(),
+                                      border: outlinedBorder,
+                                      enabledBorder: enabledBorder,
+                                      focusedBorder: focuseBorder,
+                                      disabledBorder: disabledBorder,
                                       contentPadding:
                                           const EdgeInsets.symmetric(
                                               horizontal: 20, vertical: 6),
-                                      fillColor: Colors.white,
+                                      fillColor: ColorManager.white,
                                       filled: true,
                                     ),
                                   ),
@@ -169,8 +147,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   // password
                                   Obx(
                                     () => TextFormField(
-                                    keyboardType: TextInputType.text,
-
+                                      keyboardType: TextInputType.text,
                                       obscureText: isObsecure.value,
                                       controller: passwordController,
                                       validator: (value) => value == ""
@@ -196,36 +173,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                           ),
                                         ),
                                         hintText: 'Password',
-                                        hintStyle:
-                                            const TextStyle(color: Colors.blue),
-                                        border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(
-                                            25,
-                                          ),
-                                          borderSide: const BorderSide(
-                                              color: Colors.white),
-                                        ),
-                                        enabledBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(
-                                            25,
-                                          ),
-                                          borderSide: const BorderSide(
-                                              color: Colors.white),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(
-                                            25,
-                                          ),
-                                          borderSide: const BorderSide(
-                                              color: Colors.white),
-                                        ),
-                                        disabledBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(
-                                            25,
-                                          ),
-                                          borderSide: const BorderSide(
-                                              color: Colors.white),
-                                        ),
+                                        hintStyle: hintStyle(),
+                                        border: outlinedBorder,
+                                        enabledBorder: enabledBorder,
+                                        focusedBorder: focuseBorder,
+                                        disabledBorder: disabledBorder,
                                         contentPadding:
                                             const EdgeInsets.symmetric(
                                                 horizontal: 20, vertical: 6),

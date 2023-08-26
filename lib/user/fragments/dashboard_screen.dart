@@ -1,3 +1,4 @@
+import 'package:fashionshop/presentation/resource/color_manager.dart';
 import 'package:fashionshop/user/fragments/favorites_screen.dart';
 import 'package:fashionshop/user/fragments/home.dart';
 import 'package:fashionshop/user/fragments/order_screen.dart';
@@ -5,9 +6,6 @@ import 'package:fashionshop/user/fragments/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
-import '../../presentation/resource/color_manager.dart';
-import '../../presentation/resource/value_manager.dart';
 import '../userPrefereences/current_user.dart';
 
 // ignore: must_be_immutable
@@ -28,27 +26,27 @@ class _DashboardScreenState extends State<DashboardScreen> {
     const ProfileScreen(),
   ];
 
-  final List<Widget> _destinationScreen = [
-    const NavigationDestination(
-      selectedIcon: Icon(Icons.home),
-      icon: Icon(Icons.home_outlined),
-      label: 'Home',
-    ),
-    const NavigationDestination(
-      selectedIcon: Icon(Icons.favorite),
-      icon: Icon(Icons.favorite_outline),
-      label: 'Favorite',
-    ),
-    const NavigationDestination(
-      selectedIcon: Icon(FontAwesomeIcons.boxOpen),
-      icon: Icon(FontAwesomeIcons.box),
-      label: 'Order',
-    ),
-    const NavigationDestination(
-      selectedIcon: Icon(Icons.person),
-      icon: Icon(Icons.person_outlined),
-      label: 'Profile',
-    ),
+  final List _navigationButtonsProperties = [
+    {
+      "active_icon": Icons.home,
+      "non_active_icon": Icons.home_outlined,
+      "label": "Home",
+    },
+    {
+      "active_icon": Icons.favorite,
+      "non_active_icon": Icons.favorite_border,
+      "label": "Favorites",
+    },
+    {
+      "active_icon": FontAwesomeIcons.boxOpen,
+      "non_active_icon": FontAwesomeIcons.box,
+      "label": "Orders",
+    },
+    {
+      "active_icon": Icons.person,
+      "non_active_icon": Icons.person_outline,
+      "label": "Profile",
+    },
   ];
 
   final RxInt _indexNumber = 0.obs;
@@ -62,22 +60,27 @@ class _DashboardScreenState extends State<DashboardScreen> {
       },
       builder: (controller) {
         return Scaffold(
-          bottomNavigationBar: SafeArea(
-            child: Obx(
-              () => NavigationBar(
-                height: AppSize.s60,
-                selectedIndex: _indexNumber.value,
-                indicatorColor: ColorManager.primaryOpacity70,
-                destinations: _destinationScreen,
-                onDestinationSelected: (value) {
-                  setState(() {
-                    _indexNumber.value = value;
-                  });
-                },
-              ),
+          bottomNavigationBar: Obx(
+            () => BottomNavigationBar(
+              currentIndex: _indexNumber.value,
+              onTap: (value) {
+                _indexNumber.value = value;
+              },
+              showSelectedLabels: true,
+              showUnselectedLabels: true,
+              selectedItemColor: Colors.white,
+              unselectedItemColor: Colors.white24,
+              items: List.generate(4, (index) {
+                var navBtnProperty = _navigationButtonsProperties[index];
+                return BottomNavigationBarItem(
+                    backgroundColor: ColorManager.primary,
+                    icon: Icon(navBtnProperty["non_active_icon"]),
+                    activeIcon: Icon(navBtnProperty["active_icon"]),
+                    label: navBtnProperty["label"]);
+              }),
             ),
           ),
-          body: Obx(() => _fragmentScreen[_indexNumber.value]),
+          body: SafeArea(child: Obx(() => _fragmentScreen[_indexNumber.value])),
         );
       },
     );
