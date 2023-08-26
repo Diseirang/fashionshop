@@ -14,9 +14,10 @@ class ProfileScreen extends StatelessWidget {
 
   signOutUser() async {
     var resultRespone = await Get.dialog(AlertDialog(
-      backgroundColor: ColorManager.grey1,
-      title: const Text(
+      backgroundColor: ColorManager.white,
+      title: Text(
         'Logout',
+        style: getBoldStyle(fontSize: AppSize.s20, color: Colors.black),
       ),
       content: const Text('Are you sure want to sign out?'),
       actions: [
@@ -34,7 +35,7 @@ class ProfileScreen extends StatelessWidget {
             Get.back(result: 'LoggedOut');
           },
           child: const Text(
-            'No',
+            'Yes',
             style: TextStyle(color: Colors.black),
           ),
         ),
@@ -93,7 +94,7 @@ class ProfileScreen extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  'Naka',
+                  'Your Info',
                   style: getBoldStyle(
                       color: ColorManager.darkGrey, fontSize: AppSize.s16),
                 ),
@@ -103,11 +104,11 @@ class ProfileScreen extends StatelessWidget {
           const SizedBox(
             height: AppSize.s20,
           ),
-          userInfoItem(Icons.person, 'userData'),
+          userInfoItem(Icons.person, _currentUser.user.username),
           const SizedBox(
             height: AppSize.s8,
           ),
-          userInfoItem(Icons.phone, 'Phone'),
+          userInfoItem(Icons.phone, _currentUser.user.phone),
           const SizedBox(
             height: AppSize.s8,
           ),

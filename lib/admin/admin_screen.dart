@@ -1,100 +1,66 @@
 import 'dart:convert';
-
 import 'package:fashionshop/api_connection/api_connection.dart';
+import 'package:fashionshop/presentation/resource/color_manager.dart';
 import 'package:fashionshop/presentation/resource/style_manager.dart';
+import 'package:fashionshop/presentation/resource/textbox_manager.dart';
+import 'package:fashionshop/user/authentication/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import '../presentation/resource/value_manager.dart';
+import 'admin_upload.dart';
 
-import '../../presentation/resource/textbox_manager.dart';
-import '../../presentation/resource/value_manager.dart';
-import '../model/user.dart';
-import 'login_screen.dart';
-
-class SignupScreen extends StatefulWidget {
-  const SignupScreen({super.key});
+class AdminLoginScreen extends StatefulWidget {
+  const AdminLoginScreen({super.key});
 
   @override
-  State<SignupScreen> createState() => _SignupScreenState();
+  State<AdminLoginScreen> createState() => _AdminLoginScreenState();
 }
 
-class _SignupScreenState extends State<SignupScreen> {
+class _AdminLoginScreenState extends State<AdminLoginScreen> {
   var formKey = GlobalKey<FormState>();
-  var userNameController = TextEditingController();
   var phoneController = TextEditingController();
   var passwordController = TextEditingController();
   var isObsecure = true.obs;
 
-  validatePhoneNumber() async {
+  loginAdmin() async {
     try {
-      var res = await http.post(
-        Uri.parse(API.validatePhone),
+      var resAdminData = await http.post(
+        Uri.parse(API.adminlogin),
         body: {
-          'user_phone': phoneController.text.trim().toString(),
+          'admin_name': phoneController.text.trim(),
+          'admin_password': phoneController.text.trim(),
         },
       );
-      if (res.statusCode == 200) {
-        var resBodyOfValidatePhone = jsonDecode(res.body);
 
-        if (resBodyOfValidatePhone['phoneFound'] == true) {
-          Fluttertoast.showToast(
-              msg: 'This phone number is use by someone. Try another one!');
-        } else {
-          registeredAndSavedUserRevord();
-          // Fluttertoast.showToast(msg: 'Your acount is created successfully!');
-        }
-      }
-    } catch (e) {
-      // print(e.toString());
-      Fluttertoast.showToast(msg: e.toString());
-    }
-  }
+      if (resAdminData.statusCode == 200) {
+        var resBodyOfLogin = jsonDecode(resAdminData.body);
 
-  registeredAndSavedUserRevord() async {
-    User userModel = User(
-      1,
-      userNameController.text,
-      phoneController.text,
-      passwordController.text,
-    );
-    try {
-      var res = await http.post(
-        Uri.parse(API.signUp),
-        body: userModel.toJson(),
-      );
-
-      if (res.statusCode == 200) {
-        var resBodyOfSignUp = jsonDecode(res.body);
-
-        if (resBodyOfSignUp['success'] == true) {
-          Fluttertoast.showToast(
-              msg: 'Congratulation, you are SignUp Successfully.');
+        if (resBodyOfLogin['login'] == true) {
+          Fluttertoast.showToast(msg: 'Login successfully.\n Have a nice day!');
 
           setState(() {
-            // clear text field
-            userNameController.clear();
+            //clear text field
             phoneController.clear();
             passwordController.clear();
           });
 
-          // push user to dashboard
           Future.delayed(const Duration(milliseconds: 1000), () {
-            Get.to(const LoginScreen());
+            Get.to(const AdminUploadScreen());
           });
         } else {
-          Fluttertoast.showToast(msg: 'Error Occured. Try Again.');
+          Fluttertoast.showToast(
+              msg: 'Invalid phone number or password. Try Again.');
         }
       }
     } catch (e) {
-      // print(e.toString());
       Fluttertoast.showToast(msg: e.toString());
     }
   }
 
   @override
   void dispose() {
-    userNameController.dispose();
     phoneController.dispose();
     passwordController.dispose();
     super.dispose();
@@ -113,29 +79,28 @@ class _SignupScreenState extends State<SignupScreen> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  // Signup screen header
+                  // login screen header
                   SizedBox(
                     height: 285,
                     width: MediaQuery.of(context).size.width,
-                    child: Image.asset('assets/Signup.jpg'),
+                    child: Image.asset('assets/Login.jpg'),
                   ),
- const SizedBox(
+                  const SizedBox(
                     height: AppSize.s28,
                   ),
                   Text(
-                    'User SignUp',
-                    style: getBoldStyle(
-                        fontSize: AppSize.s28, color: Colors.blue),
+                    'Admin Login',
+                    style:
+                        getBoldStyle(fontSize: AppSize.s28, color: Colors.blue),
                   ),
-
                   Padding(
                     padding: const EdgeInsets.all(16),
                     child: Container(
                       decoration: const BoxDecoration(
                           color: Colors.white70,
                           borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(30),
-                            bottomLeft: Radius.circular(30),
+                            topLeft: Radius.circular(30),
+                            bottomRight: Radius.circular(30),
                           ),
                           boxShadow: [
                             BoxShadow(
@@ -152,33 +117,9 @@ class _SignupScreenState extends State<SignupScreen> {
                               key: formKey,
                               child: Column(
                                 children: [
-                                  //username
-                                  TextFormField(
-                                    controller: userNameController,
-                                    validator: (value) => value == ""
-                                        ? "Please enter your username"
-                                        : null,
-                                    decoration: InputDecoration(
-                                      prefixIcon: const Icon(
-                                        Icons.person,
-                                        color: Colors.blue,
-                                      ),
-                                      hintText: 'Username',
-                                      hintStyle: hintStyle(),
-                                      border: outlinedBorder,
-                                      enabledBorder: enabledBorder,
-                                      focusedBorder: focuseBorder,
-                                      disabledBorder: disabledBorder,
-                                      contentPadding: contentPadding,
-                                      fillColor: Colors.white,
-                                      filled: true,
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    height: 15,
-                                  ),
                                   //phone
                                   TextFormField(
+                                    keyboardType: TextInputType.phone,
                                     controller: phoneController,
                                     validator: (value) => value == ""
                                         ? "Please enter your phone number"
@@ -194,8 +135,10 @@ class _SignupScreenState extends State<SignupScreen> {
                                       enabledBorder: enabledBorder,
                                       focusedBorder: focuseBorder,
                                       disabledBorder: disabledBorder,
-                                      contentPadding:contentPadding,
-                                      fillColor: Colors.white,
+                                      contentPadding:
+                                          const EdgeInsets.symmetric(
+                                              horizontal: 20, vertical: 6),
+                                      fillColor: ColorManager.white,
                                       filled: true,
                                     ),
                                   ),
@@ -205,6 +148,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                   // password
                                   Obx(
                                     () => TextFormField(
+                                      keyboardType: TextInputType.text,
                                       obscureText: isObsecure.value,
                                       controller: passwordController,
                                       validator: (value) => value == ""
@@ -235,7 +179,9 @@ class _SignupScreenState extends State<SignupScreen> {
                                         enabledBorder: enabledBorder,
                                         focusedBorder: focuseBorder,
                                         disabledBorder: disabledBorder,
-                                        contentPadding:contentPadding,
+                                        contentPadding:
+                                            const EdgeInsets.symmetric(
+                                                horizontal: 20, vertical: 6),
                                         fillColor: Colors.white,
                                         filled: true,
                                       ),
@@ -251,7 +197,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                     child: InkWell(
                                       onTap: () {
                                         if (formKey.currentState!.validate()) {
-                                          validatePhoneNumber();
+                                          loginAdmin();
                                         }
                                       },
                                       borderRadius: BorderRadius.circular(25),
@@ -261,8 +207,9 @@ class _SignupScreenState extends State<SignupScreen> {
                                           vertical: 10,
                                         ),
                                         child: Text(
-                                          'Signup',
+                                          'Login',
                                           style: TextStyle(
+                                            fontWeight: FontWeight.bold,
                                             color: Colors.white,
                                             fontSize: 16,
                                           ),
@@ -279,13 +226,13 @@ class _SignupScreenState extends State<SignupScreen> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                const Text("Already have an account?"),
+                                const Text("I'm not Admin?"),
                                 TextButton(
                                   onPressed: () {
                                     Get.to(const LoginScreen());
                                   },
                                   child: const Text(
-                                    'Login Here',
+                                    'Click here',
                                     style: TextStyle(
                                       color: Colors.purpleAccent,
                                     ),

@@ -1,6 +1,6 @@
 import 'package:fashionshop/presentation/resource/color_manager.dart';
 import 'package:fashionshop/user/fragments/favorites_screen.dart';
-import 'package:fashionshop/user/fragments/home.dart';
+import 'package:fashionshop/user/fragments/home_screen.dart';
 import 'package:fashionshop/user/fragments/order_screen.dart';
 import 'package:fashionshop/user/fragments/profile_screen.dart';
 import 'package:flutter/material.dart';

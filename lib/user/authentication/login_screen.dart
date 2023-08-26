@@ -1,15 +1,15 @@
 import 'dart:convert';
-
+import 'package:fashionshop/admin/admin_screen.dart';
 import 'package:fashionshop/api_connection/api_connection.dart';
 import 'package:fashionshop/presentation/resource/color_manager.dart';
 import 'package:fashionshop/presentation/resource/style_manager.dart';
 import 'package:fashionshop/presentation/resource/textbox_manager.dart';
+import 'package:fashionshop/presentation/resource/value_manager.dart';
 import 'package:fashionshop/user/userPrefereences/user_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-
 import '../model/user.dart';
 import '../fragments/dashboard_screen.dart';
 import 'signup_screen.dart';
@@ -30,7 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
   loginUser() async {
     try {
       var resUserData = await http.post(
-        Uri.parse(API.login),
+        Uri.parse(API.userlogin),
         body: {
           'user_phone': phoneController.text.trim(),
           'user_password': phoneController.text.trim(),
@@ -91,6 +91,14 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: 285,
                     width: MediaQuery.of(context).size.width,
                     child: Image.asset('assets/Login.jpg'),
+                  ),
+                  const SizedBox(
+                    height: AppSize.s28,
+                  ),
+                  Text(
+                    'User Login',
+                    style: getBoldStyle(
+                        fontSize: AppSize.s28, color: Colors.blue),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(16),
@@ -233,31 +241,33 @@ class _LoginScreenState extends State<LoginScreen> {
                                   child: const Text(
                                     'Register Here',
                                     style: TextStyle(
+                                      color: Colors.blue,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const Text(
+                              'OR',
+                              style: TextStyle(color: Colors.black),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Text("Are you admin?"),
+                                TextButton(
+                                  onPressed: () {
+                                    Get.to(const AdminLoginScreen());
+                                  },
+                                  child: const Text(
+                                    'Click Here',
+                                    style: TextStyle(
                                       color: Colors.purpleAccent,
                                     ),
                                   ),
                                 ),
                               ],
                             ),
-                            // const Text(
-                            //   'OR',
-                            //   style: TextStyle(color: Colors.white),
-                            // ),
-                            // Row(
-                            //   mainAxisAlignment: MainAxisAlignment.center,
-                            //   children: [
-                            //     const Text("Are you admin?"),
-                            //     TextButton(
-                            //       onPressed: () {},
-                            //       child: const Text(
-                            //         'Click Here',
-                            //         style: TextStyle(
-                            //           color: Colors.purpleAccent,
-                            //         ),
-                            //       ),
-                            //     ),
-                            //   ],
-                            // ),
                           ],
                         ),
                       ),

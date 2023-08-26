@@ -28,3 +28,6 @@ OutlineInputBorder focuseBorder = OutlineInputBorder(
   ),
   borderSide: const BorderSide(color: Colors.green),
 );
+
+EdgeInsets contentPadding =
+    const EdgeInsets.symmetric(horizontal: 20, vertical: 6);
