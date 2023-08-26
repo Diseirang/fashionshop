@@ -1,28 +1,75 @@
 import 'package:fashionshop/presentation/resource/color_manager.dart';
 import 'package:fashionshop/presentation/resource/value_manager.dart';
+import 'package:fashionshop/user/authentication/login_screen.dart';
+import 'package:fashionshop/user/userPrefereences/current_user.dart';
+import 'package:fashionshop/user/userPrefereences/user_preferences.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../presentation/resource/style_manager.dart';
 
 class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
+  ProfileScreen({super.key});
+  final CurrentUser _currentUser = Get.put(CurrentUser());
 
-  Widget userInfoItemProfile(IconData iconData, String userData) {
+  signOutUser() async {
+    var resultRespone = await Get.dialog(AlertDialog(
+      backgroundColor: ColorManager.grey1,
+      title: const Text(
+        'Logout',
+      ),
+      content: const Text('Are you sure want to sign out?'),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Get.back();
+          },
+          child: const Text(
+            'No',
+            style: TextStyle(color: Colors.black),
+          ),
+        ),
+        TextButton(
+          onPressed: () {
+            Get.back(result: 'LoggedOut');
+          },
+          child: const Text(
+            'No',
+            style: TextStyle(color: Colors.black),
+          ),
+        ),
+      ],
+    ));
+    if (resultRespone == 'LoggedOut') {
+      RememberUserPrefs.removeUserInfo().then(
+        (value) => Get.off(
+          const LoginScreen(),
+        ),
+      );
+    }
+  }
+
+  Widget userInfoItem(IconData iconData, String userData) {
     return Container(
       padding: const EdgeInsets.symmetric(
-        horizontal: AppPadding.p16,
+        horizontal: AppPadding.p12,
         vertical: AppPadding.p8,
       ),
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(
-          Radius.circular(AppSize.s28),
+          Radius.circular(AppSize.s12),
         ),
         color: ColorManager.grey,
       ),
       child: Row(
         children: [
-          Icon(iconData, size: AppSize.s28,color: ColorManager.primary,),
-          Text(userData,style: getMediumStyle(color: ColorManager.darkGrey),),
+          Icon(
+            iconData,
+            size: AppSize.s28,
+            color: ColorManager.lightBlue,
+          ),
+          const SizedBox(width: AppSize.s8),
+          Text(userData, style: getMediumStyle(color: ColorManager.white)),
         ],
       ),
     );
@@ -30,28 +77,69 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: [
-        Center(
-          child: Column(
-            children: [
-              Container(
-                margin: const EdgeInsets.all(AppMargin.m20),
-                height: 150,
-                child: ClipOval(
-                  clipBehavior: Clip.hardEdge,
-                  child: Image.asset('assets/Profile.jpg'),
+    return Padding(
+      padding: const EdgeInsets.all(AppPadding.p18),
+      child: ListView(
+        children: [
+          Center(
+            child: Column(
+              children: [
+                Container(
+                  margin: const EdgeInsets.all(AppMargin.m20),
+                  height: 150,
+                  child: ClipOval(
+                    clipBehavior: Clip.hardEdge,
+                    child: Image.asset('assets/Profile.jpg'),
+                  ),
+                ),
+                Text(
+                  'Naka',
+                  style: getBoldStyle(
+                      color: ColorManager.darkGrey, fontSize: AppSize.s16),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(
+            height: AppSize.s20,
+          ),
+          userInfoItem(Icons.person, 'userData'),
+          const SizedBox(
+            height: AppSize.s8,
+          ),
+          userInfoItem(Icons.phone, 'Phone'),
+          const SizedBox(
+            height: AppSize.s8,
+          ),
+          userInfoItem(Icons.email, 'Email'),
+          const SizedBox(
+            height: AppSize.s12,
+          ),
+          Center(
+            child: Material(
+              color: ColorManager.primary,
+              borderRadius: BorderRadius.circular(AppSize.s20),
+              child: InkWell(
+                onTap: () => signOutUser(),
+                borderRadius: BorderRadius.circular(AppSize.s20),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AppPadding.p20,
+                    vertical: AppPadding.p12,
+                  ),
+                  child: Text(
+                    'Sign Out',
+                    style: getBoldStyle(
+                      fontSize: AppSize.s18,
+                      color: ColorManager.white,
+                    ),
+                  ),
                 ),
               ),
-              Text(
-                'Naka',
-                style: getBoldStyle(
-                    color: ColorManager.darkGrey, fontSize: AppSize.s16),
-              ),
-            ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

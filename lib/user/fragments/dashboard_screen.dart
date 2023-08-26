@@ -23,7 +23,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     const HomeScreen(),
     const FavoritesScreen(),
     const OrderScreen(),
-    const ProfileScreen(),
+      ProfileScreen(),
   ];
 
   final List _navigationButtonsProperties = [
