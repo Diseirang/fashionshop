@@ -1,4 +1,3 @@
-import 'package:fashionshop/presentation/resource/color_manager.dart';
 import 'package:fashionshop/user/fragments/favorites_screen.dart';
 import 'package:fashionshop/user/fragments/home_screen.dart';
 import 'package:fashionshop/user/fragments/order_screen.dart';
@@ -53,36 +52,42 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder(
-      init: CurrentUser(),
-      initState: (currentState) {
-        _remeberCurrentUser.getUserInfo();
-      },
-      builder: (controller) {
-        return Scaffold(
-          bottomNavigationBar: Obx(
-            () => BottomNavigationBar(
-              currentIndex: _indexNumber.value,
-              onTap: (value) {
-                _indexNumber.value = value;
-              },
-              showSelectedLabels: true,
-              showUnselectedLabels: true,
-              selectedItemColor: Colors.white,
-              unselectedItemColor: Colors.white24,
-              items: List.generate(_fragmentScreen.length, (index) {
-                var navBtnProperty = _navigationButtonsProperties[index];
-                return BottomNavigationBarItem(
-                    backgroundColor: ColorManager.primary,
-                    icon: Icon(navBtnProperty["non_active_icon"]),
-                    activeIcon: Icon(navBtnProperty["active_icon"]),
-                    label: navBtnProperty["label"]);
-              }),
-            ),
-          ),
-          body: SafeArea(child: Obx(() => _fragmentScreen[_indexNumber.value])),
-        );
-      },
-    );
+    return CurrentUser().hasListeners
+        ? const Center(child: CircularProgressIndicator())
+        : GetBuilder(
+            init: CurrentUser(),
+            initState: (currentState) {
+              _remeberCurrentUser.getUserInfo();
+            },
+            builder: (controller) {
+              return Scaffold(
+                backgroundColor: Colors.amber,
+                bottomNavigationBar: Obx(
+                  () => BottomNavigationBar(
+                    currentIndex: _indexNumber.value,
+                    onTap: (value) {
+                      _indexNumber.value = value;
+                    },
+                    iconSize: 35,
+
+                    showSelectedLabels: true,
+                    showUnselectedLabels: true,
+                    selectedItemColor: Colors.purple,
+                    unselectedItemColor: Colors.black,
+                    items: List.generate(_fragmentScreen.length, (index) {
+                      var navBtnProperty = _navigationButtonsProperties[index];
+                      return BottomNavigationBarItem(
+                          backgroundColor: Colors.amber,
+                          icon: Icon(navBtnProperty["non_active_icon"]),
+                          activeIcon: Icon(navBtnProperty["active_icon"]),
+                          label: navBtnProperty["label"]);
+                    }),
+                  ),
+                ),
+                body: SafeArea(
+                    child: Obx(() => _fragmentScreen[_indexNumber.value])),
+              );
+            },
+          );
   }
 }

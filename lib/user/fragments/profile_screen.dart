@@ -5,7 +5,6 @@ import 'package:fashionshop/user/userPrefereences/current_user.dart';
 import 'package:fashionshop/user/userPrefereences/user_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../presentation/resource/style_manager.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -78,68 +77,70 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(AppPadding.p18),
-      child: ListView(
-        children: [
-          Center(
-            child: Column(
-              children: [
-                Container(
-                  margin: const EdgeInsets.all(AppMargin.m20),
-                  height: 150,
-                  child: ClipOval(
-                    clipBehavior: Clip.hardEdge,
-                    child: Image.asset('assets/Profile.jpg'),
+    return Scaffold(
+      body: Padding(
+        padding: const EdgeInsets.all(AppPadding.p18),
+        child: ListView(
+          children: [
+            Center(
+              child: Column(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.all(AppMargin.m20),
+                    height: 150,
+                    child: ClipOval(
+                      clipBehavior: Clip.hardEdge,
+                      child: Image.asset('assets/Profile.jpg'),
+                    ),
                   ),
-                ),
-                Text(
-                  'Your Info',
-                  style: getBoldStyle(
-                      color: ColorManager.darkGrey, fontSize: AppSize.s16),
-                ),
-              ],
+                  // Text(
+                  //   'Your Info',
+                  //   style: getBoldStyle(
+                  //       color: ColorManager.darkGrey, fontSize: 30),
+                  // ),
+                ],
+              ),
             ),
-          ),
-          const SizedBox(
-            height: AppSize.s20,
-          ),
-          userInfoItem(Icons.person, _currentUser.user.username),
-          const SizedBox(
-            height: AppSize.s8,
-          ),
-          userInfoItem(Icons.phone, _currentUser.user.phone),
-          const SizedBox(
-            height: AppSize.s8,
-          ),
-          userInfoItem(Icons.email, 'Email'),
-          const SizedBox(
-            height: AppSize.s12,
-          ),
-          Center(
-            child: Material(
-              color: ColorManager.primary,
-              borderRadius: BorderRadius.circular(AppSize.s20),
-              child: InkWell(
-                onTap: () => signOutUser(),
+            const SizedBox(
+              height: AppSize.s20,
+            ),
+            userInfoItem(Icons.person, _currentUser.user.username),
+            const SizedBox(
+              height: AppSize.s8,
+            ),
+            userInfoItem(Icons.phone, _currentUser.user.phone),
+            const SizedBox(
+              height: AppSize.s8,
+            ),
+            userInfoItem(Icons.email, 'Email'),
+            const SizedBox(
+              height: AppSize.s12,
+            ),
+            Center(
+              child: Material(
+                color: ColorManager.primary,
                 borderRadius: BorderRadius.circular(AppSize.s20),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: AppPadding.p20,
-                    vertical: AppPadding.p12,
-                  ),
-                  child: Text(
-                    'Sign Out',
-                    style: getBoldStyle(
-                      fontSize: AppSize.s18,
-                      color: ColorManager.white,
+                child: InkWell(
+                  onTap: () => signOutUser(),
+                  borderRadius: BorderRadius.circular(AppSize.s20),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: AppPadding.p20,
+                      vertical: AppPadding.p12,
+                    ),
+                    child: Text(
+                      'Sign Out',
+                      style: getBoldStyle(
+                        fontSize: AppSize.s18,
+                        color: ColorManager.white,
+                      ),
                     ),
                   ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

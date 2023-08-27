@@ -1,7 +1,8 @@
 class API {
   // static const hostConnect = "http://10.21.0.18:8080/api_fashionshop/"; //Ubuntu localhost
   static const hostConnect =
-      "http://192.168.0.109:8080/api_fashionshop"; //Windows localhost
+      "http://192.168.0.107:8080/api_fashionshop"; //Windows localhost
+  // static const hostConnect = "http://10.15.54.21:8080/api_fashionshop/"; //Ubuntu localhost
 
   static const hostConnectUser = "$hostConnect/user";
   static const hostConnectAdmin = "$hostConnect/admin";
@@ -23,6 +24,8 @@ class API {
 
   //upload Item
   static const uploadItem = "$hostUploadItem/upload.php";
+  //fetch all Item
+  static const fetchAllItem = "$hostUploadItem/fetchdata.php";
   //get trending Item
   static const getTrendingMostPopularItems =
       "$hostUploadItem/trending.php";
