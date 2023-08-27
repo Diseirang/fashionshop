@@ -9,8 +9,7 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 import '../resource/color_manager.dart';
-import '../screen/item_screen.dart';
-
+import '../../user/item/item_detail.dart';
 
 Future<List<Item>> getTrendingItems() async {
   List<Item> trendingItemList = [];
@@ -23,13 +22,13 @@ Future<List<Item>> getTrendingItems() async {
           trendingItemList.add(Item.fromJson(element));
         }
       } else {
-        Fluttertoast.showToast(msg: 'Error: Data not fetched');
+        Fluttertoast.showToast(msg: 'Error! Data not founded');
       }
     } else {
-      Fluttertoast.showToast(msg: 'Error, status code is not 200');
+      Fluttertoast.showToast(msg: 'Error! status code is not 200');
     }
   } catch (e) {
-    Fluttertoast.showToast(msg: 'Error, ${e.toString()}');
+    Fluttertoast.showToast(msg: 'Error! ${e.toString()}');
   }
   return trendingItemList;
 }
@@ -51,7 +50,7 @@ Widget trendingMostPopularItemWidget(context) {
         }
         if (dataSnapShot.data!.isNotEmpty) {
           return SizedBox(
-            height: 300,
+            height: 320,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: dataSnapShot.data!.length,
@@ -59,10 +58,10 @@ Widget trendingMostPopularItemWidget(context) {
                 Item eachItemData = dataSnapShot.data![index];
                 return GestureDetector(
                   onTap: () {
-                    Get.to(  ItemScreen(eachItemData.id));
+                    Get.to(ItemScreen(eachItemData));
                   },
                   child: Container(
-                    height: 300,
+                    height: 320,
                     width: 200,
                     margin: EdgeInsets.fromLTRB(
                       index == 0 ? 16 : 8,
@@ -73,6 +72,7 @@ Widget trendingMostPopularItemWidget(context) {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       color: Colors.white,
+                      border: Border.all(width: 3, color: Colors.blue),
                       boxShadow: [
                         BoxShadow(
                           offset: const Offset(2, 2),
@@ -116,23 +116,20 @@ Widget trendingMostPopularItemWidget(context) {
                             children: [
                               //item name & price
                               Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  // SizedBox(height: AppSize.s20,),
                                   Expanded(
                                     child: Text(
                                       eachItemData.name,
-                                      maxLines: 1,
+                                      maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
                                       style: const TextStyle(
                                         color: Colors.black,
-                                        fontSize: 18,
+                                        fontSize: 16,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                   ),
-                                  // const SizedBox(
-                                  //   width: 10,
-                                  // ),
                                   Text(
                                     '\$ ${eachItemData.price.toString()}',
                                     style: const TextStyle(
@@ -164,7 +161,7 @@ Widget trendingMostPopularItemWidget(context) {
                                     onRatingUpdate: (updateRating) {},
                                     ignoreGestures: true,
                                     unratedColor: Colors.grey,
-                                    itemSize: 20,
+                                    itemSize: 22,
                                   ),
                                   const SizedBox(
                                     width: 8,

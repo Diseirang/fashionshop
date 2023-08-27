@@ -9,7 +9,7 @@ Widget groupTitle(String text) {
       ),
       child: Text(
         text,
-        style: getBoldStyle(fontSize: 22, color: Colors.black),
+        style: getBoldStyle(fontSize: 22, color: Colors.blue),
       ),
     );
   }

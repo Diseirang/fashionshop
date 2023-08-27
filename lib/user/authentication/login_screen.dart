@@ -88,9 +88,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 children: [
                   // login screen header
                   SizedBox(
-                    height: 285,
+                    height: 265,
                     width: MediaQuery.of(context).size.width,
-                    child: Image.asset('assets/Login.jpg'),
+                    child: Image.asset('assets/Login.png'),
                   ),
                   const SizedBox(
                     height: AppSize.s28,
@@ -98,7 +98,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   Text(
                     'User Login',
                     style:
-                        getBoldStyle(fontSize: AppSize.s28, color: Colors.blue),
+                        getBoldStyle(fontSize: 30, color: Colors.blue),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(16),

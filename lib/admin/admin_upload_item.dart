@@ -381,21 +381,7 @@ class _AdminUploadScreenState extends State<AdminUploadScreen> {
                             controller: nameController,
                             validator: (val) =>
                                 val == "" ? "Please write item name" : null,
-                            decoration: InputDecoration(
-                              prefixIcon: const Icon(
-                                Icons.title,
-                                color: Colors.black,
-                              ),
-                              hintText: "item name...",
-                              hintStyle: hintStyle(),
-                              border: outlinedBorder,
-                              enabledBorder: enabledBorder,
-                              focusedBorder: focuseBorder,
-                              disabledBorder: disabledBorder,
-                              contentPadding: contentPadding,
-                              fillColor: Colors.white,
-                              filled: true,
-                            ),
+                            decoration: inputDecoration(Icons.title, 'item name'),
                           ),
 
                           const SizedBox(
@@ -408,21 +394,7 @@ class _AdminUploadScreenState extends State<AdminUploadScreen> {
                             controller: ratingController,
                             validator: (val) =>
                                 val == "" ? "Please give item rating" : null,
-                            decoration: InputDecoration(
-                              prefixIcon: const Icon(
-                                Icons.rate_review,
-                                color: Colors.black,
-                              ),
-                              hintText: "item rating...",
-                              hintStyle: hintStyle(),
-                              border: outlinedBorder,
-                              enabledBorder: enabledBorder,
-                              focusedBorder: focuseBorder,
-                              disabledBorder: disabledBorder,
-                              contentPadding: contentPadding,
-                              fillColor: Colors.white,
-                              filled: true,
-                            ),
+                            decoration: inputDecoration(Icons.rate_review, 'item rate...'),
                           ),
 
                           const SizedBox(
@@ -435,21 +407,7 @@ class _AdminUploadScreenState extends State<AdminUploadScreen> {
                             controller: tagsController,
                             validator: (val) =>
                                 val == "" ? "Please write item tags" : null,
-                            decoration: InputDecoration(
-                              prefixIcon: const Icon(
-                                Icons.tag,
-                                color: Colors.black,
-                              ),
-                              hintText: "item tags...",
-                              hintStyle: hintStyle(),
-                              border: outlinedBorder,
-                              enabledBorder: enabledBorder,
-                              focusedBorder: focuseBorder,
-                              disabledBorder: disabledBorder,
-                              contentPadding: contentPadding,
-                              fillColor: Colors.white,
-                              filled: true,
-                            ),
+                            decoration: inputDecoration(Icons.tag, 'item tags...'),
                           ),
 
                           const SizedBox(
@@ -462,21 +420,7 @@ class _AdminUploadScreenState extends State<AdminUploadScreen> {
                             controller: priceController,
                             validator: (val) =>
                                 val == "" ? "Please write item price" : null,
-                            decoration: InputDecoration(
-                              prefixIcon: const Icon(
-                                Icons.price_change_outlined,
-                                color: Colors.black,
-                              ),
-                              hintText: "item price...",
-                              hintStyle: hintStyle(),
-                              border: outlinedBorder,
-                              enabledBorder: enabledBorder,
-                              focusedBorder: focuseBorder,
-                              disabledBorder: disabledBorder,
-                              contentPadding: contentPadding,
-                              fillColor: Colors.white,
-                              filled: true,
-                            ),
+                            decoration: inputDecoration(Icons.price_change_outlined, 'item price...'),
                           ),
 
                           const SizedBox(
@@ -489,21 +433,7 @@ class _AdminUploadScreenState extends State<AdminUploadScreen> {
                             controller: sizesController,
                             validator: (val) =>
                                 val == "" ? "Please write item sizes" : null,
-                            decoration: InputDecoration(
-                              prefixIcon: const Icon(
-                                Icons.picture_in_picture,
-                                color: Colors.black,
-                              ),
-                              hintText: "item size...",
-                              hintStyle: hintStyle(),
-                              border: outlinedBorder,
-                              enabledBorder: enabledBorder,
-                              focusedBorder: focuseBorder,
-                              disabledBorder: disabledBorder,
-                              contentPadding: contentPadding,
-                              fillColor: Colors.white,
-                              filled: true,
-                            ),
+                            decoration: inputDecoration(Icons.picture_in_picture, 'item sizes...'),
                           ),
 
                           const SizedBox(
@@ -516,21 +446,8 @@ class _AdminUploadScreenState extends State<AdminUploadScreen> {
                             controller: colorsController,
                             validator: (val) =>
                                 val == "" ? "Please write item colors" : null,
-                            decoration: InputDecoration(
-                              prefixIcon: const Icon(
-                                Icons.color_lens,
-                                color: Colors.black,
-                              ),
-                              hintText: "item colors...",
-                              hintStyle: hintStyle(),
-                              border: outlinedBorder,
-                              enabledBorder: enabledBorder,
-                              focusedBorder: focuseBorder,
-                              disabledBorder: disabledBorder,
-                              contentPadding: contentPadding,
-                              fillColor: Colors.white,
-                              filled: true,
-                            ),
+                            decoration: inputDecoration(
+                                Icons.color_lens, 'item colors...'),
                           ),
 
                           const SizedBox(
@@ -544,21 +461,8 @@ class _AdminUploadScreenState extends State<AdminUploadScreen> {
                             validator: (val) => val == ""
                                 ? "Please write item description"
                                 : null,
-                            decoration: InputDecoration(
-                              prefixIcon: const Icon(
-                                Icons.description,
-                                color: Colors.black,
-                              ),
-                              hintText: "item description...",
-                              hintStyle: hintStyle(),
-                              border: outlinedBorder,
-                              enabledBorder: enabledBorder,
-                              focusedBorder: focuseBorder,
-                              disabledBorder: disabledBorder,
-                              contentPadding: contentPadding,
-                              fillColor: Colors.white,
-                              filled: true,
-                            ),
+                            decoration: inputDecoration(
+                                Icons.description, 'item description...'),
                           ),
 
                           const SizedBox(
@@ -614,5 +518,23 @@ class _AdminUploadScreenState extends State<AdminUploadScreen> {
   @override
   Widget build(BuildContext context) {
     return _pickedImageXFile == null ? defaultScreen() : uploadItemFormScreen();
+  }
+
+  InputDecoration inputDecoration(IconData iconData, String hintText) {
+    return InputDecoration(
+      prefixIcon: Icon(
+        iconData,
+        color: Colors.black,
+      ),
+      hintText: hintText,
+      hintStyle: hintStyle(),
+      border: outlinedBorder,
+      enabledBorder: enabledBorder,
+      focusedBorder: focuseBorder,
+      disabledBorder: disabledBorder,
+      contentPadding: contentPadding,
+      fillColor: Colors.white,
+      filled: true,
+    );
   }
 }

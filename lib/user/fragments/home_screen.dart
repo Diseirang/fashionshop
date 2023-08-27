@@ -7,7 +7,6 @@ import '../../presentation/resource/value_manager.dart';
 import '../../presentation/widget/new_collection.dart';
 import '../../presentation/widget/subtitle.dart';
 import '../../presentation/widget/trending_item.dart';
-
 import '../userPrefereences/current_user.dart';
 
 // ignore: must_be_immutable
@@ -52,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
           automaticallyImplyLeading: false,
           title: Text(
             'Welcome, ${_currentUser.user.username}',
-            style: const TextStyle(color: Colors.white),
+            style: const TextStyle(color: Colors.white, fontSize: 22),
           ),
         ),
         body: SingleChildScrollView(

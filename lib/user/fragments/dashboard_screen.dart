@@ -72,7 +72,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
                     showSelectedLabels: true,
                     showUnselectedLabels: true,
-                    selectedItemColor: Colors.purple,
+                    selectedItemColor: Colors.blue,
                     unselectedItemColor: Colors.black,
                     items: List.generate(_fragmentScreen.length, (index) {
                       var navBtnProperty = _navigationButtonsProperties[index];

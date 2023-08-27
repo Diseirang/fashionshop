@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:fluttertoast/fluttertoast.dart';
@@ -7,7 +8,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import '../../api_connection/api_connection.dart';
 import '../../user/model/item.dart';
 import '../resource/color_manager.dart';
-import '../screen/item_screen.dart';
+import '../../user/item/item_detail.dart';
 
 Future<List<Item>> getAllItems() async {
   List<Item> getAllItemList = [];
@@ -56,10 +57,9 @@ Widget getAllItemWidget(context) {
             Item eachItemData = dataSnapShot.data![index];
             return GestureDetector(
               onTap: () {
-                Get.to(ItemScreen(eachItemData.id));
+                Get.to(ItemScreen(eachItemData));
               },
               child: Container(
-                
                 margin: EdgeInsets.fromLTRB(
                   16,
                   index == 0 ? 16 : 8,
@@ -67,6 +67,7 @@ Widget getAllItemWidget(context) {
                   index == dataSnapShot.data!.length - 1 ? 16 : 8,
                 ),
                 decoration: BoxDecoration(
+                  border: Border.all(width: 3, color: Colors.blue),
                   borderRadius: BorderRadius.circular(20),
                   color: Colors.white,
                   boxShadow: [
@@ -77,58 +78,103 @@ Widget getAllItemWidget(context) {
                     ),
                   ],
                 ),
+
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            eachItemData.name,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 22,
-                              fontWeight: FontWeight.bold,
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 16, right: 16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    eachItemData.name,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 6, bottom: 6),
-                            child: Text(
-                              '\$ ${eachItemData.price.toString()}',
-                              style: const TextStyle(
-                                color: Colors.blue,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
+                            Padding(
+                              padding: const EdgeInsets.only(top: 6, bottom: 6),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    '\$ ${eachItemData.price.toString()}',
+                                    style: const TextStyle(
+                                      color: Colors.blue,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Row(
+                                    children: [
+                                      RatingBar.builder(
+                                        initialRating: eachItemData.rating,
+                                        minRating: 1,
+                                        direction: Axis.horizontal,
+                                        allowHalfRating: true,
+                                        itemCount: 5,
+                                        itemBuilder: (context, c) => const Icon(
+                                          Icons.star,
+                                          color: Colors.amber,
+                                        ),
+                                        onRatingUpdate: (updateRating) {},
+                                        ignoreGestures: true,
+                                        unratedColor: Colors.grey,
+                                        itemSize: 14,
+                                      ),
+                                      const SizedBox(
+                                        width: 8,
+                                      ),
+                                      Text(
+                                        "(${eachItemData.rating.toString()})",
+                                        style: const TextStyle(
+                                            color: Colors.grey, fontSize: 14),
+                                      ),
+                                    ],
+                                  ),
+                                ],
                               ),
                             ),
-                          ),
-                          Text(
-                            eachItemData.tags
-                                .toString()
-                                .replaceAll('[', '')
-                                .replaceAll(']', ''),
-                            style: TextStyle(
-                              color: ColorManager.grey,
-                              fontSize: 14,
-                              // fontWeight: FontWeight.bold,
+                            Row(
+                              children: [
+                                Icon(Icons.tag,
+                                    size: 14, color: ColorManager.grey),
+                                Text(
+                                  ' ${eachItemData.tags}'
+                                      .toString()
+                                      .replaceAll('[', '')
+                                      .replaceAll(']', ''),
+                                  style: TextStyle(
+                                    color: ColorManager.grey,
+                                    fontSize: 14,
+                                    // fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
-                    //item image
                     ClipRRect(
-                      
                       borderRadius: const BorderRadius.only(
                         bottomRight: Radius.circular(20),
                         topRight: Radius.circular(20),
                       ),
                       child: FadeInImage(
-                        
                         height: 100.0,
                         width: 100.0,
                         fit: BoxFit.cover,
@@ -146,6 +192,7 @@ Widget getAllItemWidget(context) {
                     ),
                   ],
                 ),
+                //item image
               ),
             );
           },

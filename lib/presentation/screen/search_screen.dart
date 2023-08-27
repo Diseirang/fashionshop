@@ -26,6 +26,11 @@ class _SearchScreenState extends State<SearchScreen> {
               color: Colors.white,
             ),
           ),
+          actions: <Widget>[
+            TextFormField(
+              
+            )
+          ],
         ),
         bottomNavigationBar: showSearchBar(),
         resizeToAvoidBottomInset: true,
