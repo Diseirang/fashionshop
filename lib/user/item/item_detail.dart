@@ -31,8 +31,8 @@ insertCart () async {
           'user_id':currentOnlineUser.user.userid.toString(),
                  'item_id':widget.itemInfo.id.toString(),
           'quantity':itemDetailsController.quantity.toString(),
-          'color':widget.itemInfo.colors[itemDetailsController.color],
-          'size':widget.itemInfo.sizes[itemDetailsController.size],
+          'color':widget.itemInfo.colors[itemDetailsController.color].replaceAll('[' ,'').replaceAll(']', ''),
+          'size':widget.itemInfo.sizes[itemDetailsController.size].replaceAll('[' ,'').replaceAll(']', ''),
 
         },
       );
