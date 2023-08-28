@@ -1,12 +1,16 @@
+import 'dart:convert';
+
 import 'package:fashionshop/user/model/item.dart';
+import 'package:fashionshop/user/userPrefereences/current_user.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import '../../api_connection/api_connection.dart';
 import '../../presentation/resource/style_manager.dart';
 import '../controllers/item_details_controller.dart';
-
+import 'package:http/http.dart' as http;
 // ignore: must_be_immutable
 class ItemScreen extends StatefulWidget {
   final Item itemInfo;
@@ -18,6 +22,40 @@ class ItemScreen extends StatefulWidget {
 
 class _ItemScreenState extends State<ItemScreen> {
   final itemDetailsController = Get.put(ItemDetailsController());
+  final currentOnlineUser = Get.put(CurrentUser());
+insertCart () async {
+  try {
+      var res = await http.post(
+        Uri.parse(API.insertCart),
+        body: {
+          'user_id':currentOnlineUser.user.userid.toString(),
+                 'item_id':widget.itemInfo.id.toString(),
+          'quantity':itemDetailsController.quantity.toString(),
+          'color':widget.itemInfo.colors[itemDetailsController.color],
+          'size':widget.itemInfo.sizes[itemDetailsController.size],
+
+        },
+      );
+      if (res.statusCode == 200) {
+        var resBodyOfInCart = jsonDecode(res.body);
+
+        if (resBodyOfInCart['success'] == true) {
+          Fluttertoast.showToast(
+              msg: 'Cart added!');
+        } else {
+          
+          Fluttertoast.showToast(msg: 'Error occur. Cart not added!');
+        }
+      }
+      else{
+        Fluttertoast.showToast(msg: 'Status is mot 200!');
+      }
+    } catch (e) {
+      // print(e.toString());
+      Fluttertoast.showToast(msg: e.toString());
+    }
+}
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -400,6 +438,7 @@ class _ItemScreenState extends State<ItemScreen> {
                           padding: const EdgeInsets.only(bottom: 20),
                           child: Material(
                             child: InkWell(
+                              onTap: () => insertCart(),
                               child: Container(
                                 alignment: Alignment.center,
                                 height: 50,

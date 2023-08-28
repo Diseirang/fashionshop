@@ -7,6 +7,7 @@ class API {
   static const hostConnectUser = "$hostConnect/user";
   static const hostConnectAdmin = "$hostConnect/admin";
   static const hostUploadItem = "$hostConnect/item";
+  static const hostUploadCart = "$hostConnect/cart";
 
   //signup user
   static const signUp = "$hostConnectUser/signup.php";
@@ -27,9 +28,11 @@ class API {
   //fetch all Item
   static const fetchAllItem = "$hostUploadItem/fetchdata.php";
   //get trending Item
-  static const getTrendingMostPopularItems =
-      "$hostUploadItem/trending.php";
+  static const getTrendingMostPopularItems = "$hostUploadItem/trending.php";
 
   // fetch user
   static const fetchUserData = "$hostConnectUser/fetchUser.php";
+
+  //insert cart
+  static const insertCart = "$hostUploadCart/insertcart.php";
 }

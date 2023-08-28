@@ -1,10 +1,10 @@
 class User {
-  int id;
+  int userid;
   String username;
   String phone;
   String password;
 
-  User(this.id, this.username, this.phone, this.password);
+  User(this.userid, this.username, this.phone, this.password);
 
   factory User.fromJson(Map<String, dynamic> json) => User(
         int.parse(json['user_id']),
@@ -14,7 +14,7 @@ class User {
       );
 
   Map<String, dynamic> toJson() => {
-        'user_id': id.toString(),
+        'user_id': userid.toString(),
         'user_name': username,
         'user_phone': phone,
         'user_password': password,
