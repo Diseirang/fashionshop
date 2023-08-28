@@ -86,8 +86,8 @@ Widget trendingMostPopularItemWidget(context) {
                         //item image
                         ClipRRect(
                           borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(20),
-                            topRight: Radius.circular(20),
+                            topLeft: Radius.circular(18),
+                            topRight: Radius.circular(18),
                           ),
                           child: FadeInImage(
                             height: 200,

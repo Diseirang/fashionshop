@@ -30,7 +30,7 @@ class _AdminLoginScreenState extends State<AdminLoginScreen> {
         Uri.parse(API.adminlogin),
         body: {
           'admin_phone': phoneController.text.trim().toString(),
-          'admin_password': phoneController.text.trim().toString(),
+          'admin_password': passwordController.text.trim().toString(),
         },
       );
 

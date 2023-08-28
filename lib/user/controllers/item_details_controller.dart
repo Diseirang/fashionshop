@@ -1,10 +1,10 @@
 import 'package:get/get.dart';
 
 class ItemDetailsController extends GetxController {
-  RxInt _quantity = 1.obs;
-  RxInt _sizeItem = 1.obs;
-  RxInt _colorItem = 1.obs;
-  RxBool _isFavoraite = false.obs;
+  final RxInt _quantity = 1.obs;
+  final RxInt _sizeItem = 1.obs;
+  final RxInt _colorItem = 1.obs;
+  final RxBool _isFavoraite = false.obs;
 
   int get quantity => _quantity.value;
   int get size => _sizeItem.value;

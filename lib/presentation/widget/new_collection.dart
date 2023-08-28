@@ -84,95 +84,93 @@ Widget getAllItemWidget(context) {
                     Expanded(
                       child: Padding(
                         padding: const EdgeInsets.only(left: 16, right: 16),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Expanded(
-                                  child: Text(
-                                    eachItemData.name,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: const TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 22,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 6, bottom: 6),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                        child: Container(
+                          padding: const EdgeInsets.only(top:12),
+                          height: 100,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
-                                    '\$ ${eachItemData.price.toString()}',
-                                    style: const TextStyle(
-                                      color: Colors.blue,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
+                                  Expanded(
+                                    child: Text(
+                                      eachItemData.name,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: const TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 22,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
-                                  ),
-                                  Row(
-                                    children: [
-                                      RatingBar.builder(
-                                        initialRating: eachItemData.rating,
-                                        minRating: 1,
-                                        direction: Axis.horizontal,
-                                        allowHalfRating: true,
-                                        itemCount: 5,
-                                        itemBuilder: (context, c) => const Icon(
-                                          Icons.star,
-                                          color: Colors.amber,
-                                        ),
-                                        onRatingUpdate: (updateRating) {},
-                                        ignoreGestures: true,
-                                        unratedColor: Colors.grey,
-                                        itemSize: 14,
-                                      ),
-                                      const SizedBox(
-                                        width: 8,
-                                      ),
-                                      Text(
-                                        "(${eachItemData.rating.toString()})",
-                                        style: const TextStyle(
-                                            color: Colors.grey, fontSize: 14),
-                                      ),
-                                    ],
                                   ),
                                 ],
                               ),
-                            ),
-                            Row(
-                              children: [
-                                Icon(Icons.tag,
-                                    size: 14, color: ColorManager.grey),
-                                Text(
-                                  ' ${eachItemData.tags}'
-                                      .toString()
-                                      .replaceAll('[', '')
-                                      .replaceAll(']', ''),
-                                  style: TextStyle(
-                                    color: ColorManager.grey,
-                                    fontSize: 14,
-                                    // fontWeight: FontWeight.bold,
-                                  ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 6, bottom: 6),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      '\$ ${eachItemData.price.toString()}',
+                                      style: const TextStyle(
+                                        color: Colors.blue,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    Row(
+                                      children: [
+                                        RatingBar.builder(
+                                          initialRating: eachItemData.rating,
+                                          minRating: 1,
+                                          direction: Axis.horizontal,
+                                          allowHalfRating: true,
+                                          itemCount: 5,
+                                          itemBuilder: (context, c) => const Icon(
+                                            Icons.star,
+                                            color: Colors.amber,
+                                          ),
+                                          onRatingUpdate: (updateRating) {},
+                                          ignoreGestures: true,
+                                          unratedColor: Colors.grey,
+                                          itemSize: 14,
+                                        ),
+                                        const SizedBox(
+                                          width: 8,
+                                        ),
+                                        Text(
+                                          "(${eachItemData.rating.toString()})",
+                                          style: const TextStyle(
+                                              color: Colors.grey, fontSize: 14),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
-                          ],
+                              ),
+                              Text(
+                               ' ${eachItemData.tags}'
+                                   .toString()
+                                   .replaceAll('[', '')
+                                   .replaceAll(']', ''),
+                               style: TextStyle(
+                                 color: ColorManager.grey,
+                                 fontSize: 14,
+                                 // fontWeight: FontWeight.bold,
+                               ),
+                                  ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
                     ClipRRect(
                       borderRadius: const BorderRadius.only(
-                        bottomRight: Radius.circular(20),
-                        topRight: Radius.circular(20),
+                        bottomRight: Radius.circular(16),
+                        topRight: Radius.circular(16),
                       ),
                       child: FadeInImage(
                         height: 100.0,

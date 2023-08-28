@@ -33,7 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
         Uri.parse(API.userlogin),
         body: {
           'user_phone': phoneController.text.trim(),
-          'user_password': phoneController.text.trim(),
+          'user_password': passwordController.text.trim(),
         },
       );
 
@@ -197,7 +197,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   const SizedBox(
                                     height: 15,
                                   ),
-                                  //button
+                                  //button login
                                   Material(
                                     color: Colors.blue,
                                     borderRadius: BorderRadius.circular(25),
