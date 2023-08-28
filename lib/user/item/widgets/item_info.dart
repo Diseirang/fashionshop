@@ -1,9 +1,12 @@
 import 'package:fashionshop/presentation/resource/font_manager.dart';
 import 'package:fashionshop/presentation/resource/style_manager.dart';
+import 'package:fashionshop/user/controllers/item_details_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 
-class ItemInfoWidget extends StatelessWidget {
+class ItemInfoWidget extends StatefulWidget {
   final String itemName;
   final double itemPrice, itemRating;
 
@@ -13,6 +16,12 @@ class ItemInfoWidget extends StatelessWidget {
       required this.itemPrice,
       required this.itemRating});
 
+  @override
+  State<ItemInfoWidget> createState() => _ItemInfoWidgetState();
+}
+
+class _ItemInfoWidgetState extends State<ItemInfoWidget> {
+  final itemDetailsController = Get.put(ItemDetailsController());
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -59,21 +68,21 @@ class ItemInfoWidget extends StatelessWidget {
                   child: Text(
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    itemName.toUpperCase(),
+                    widget.itemName.toUpperCase(),
                     style: getBoldStyle(fontSize: 24, color: Colors.black),
                   ),
                 ),
                 Column(
                   children: [
                     Text(
-                      '\$ ${itemPrice.toString()}',
+                      '\$ ${widget.itemPrice.toString()}',
                       style: getBoldStyle(
                         fontSize: 22,
                         color: Colors.blue,
                       ),
                     ),
                     RatingBar.builder(
-                      initialRating: itemRating,
+                      initialRating: widget.itemRating,
                       minRating: 1,
                       direction: Axis.horizontal,
                       allowHalfRating: true,
@@ -91,7 +100,7 @@ class ItemInfoWidget extends StatelessWidget {
                       height: 5,
                     ),
                     Text(
-                      "(${itemRating.toString()})",
+                      "(${widget.itemRating.toString()})",
                       style: const TextStyle(color: Colors.grey, fontSize: 16),
                     ),
                   ],
@@ -105,6 +114,43 @@ class ItemInfoWidget extends StatelessWidget {
                 FontConstants.fontFamily,
                 FontWeight.normal,
                 Colors.black,
+              ),
+            ),
+            Obx(
+              () => Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      itemDetailsController
+                          .setQuantityItem(itemDetailsController.quantity + 1);
+                    },
+                    icon: const Icon(
+                      Icons.add_circle_outline,
+                      color: Colors.white,
+                    ),
+                  ),
+                  Text(
+                    itemDetailsController.quantity.toString(),
+                    style: getBoldStyle(fontSize: 20, color: Colors.black),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      if (itemDetailsController.quantity > 1) {
+                        itemDetailsController.setQuantityItem(
+                            itemDetailsController.quantity - 1);
+                      } else {
+                        itemDetailsController.quantity == 0;
+                        Fluttertoast.showToast(
+                            msg: "Item quantity can not low than 1.");
+                      }
+                    },
+                    icon: const Icon(
+                      Icons.add_circle_outline,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
