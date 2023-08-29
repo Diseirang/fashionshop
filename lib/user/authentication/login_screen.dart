@@ -32,7 +32,7 @@ class _LoginScreenState extends State<LoginScreen> {
       var resUserData = await http.post(
         Uri.parse(API.userlogin),
         body: {
-          'user_phone': phoneController.text.trim(),
+          'user_name': phoneController.text.trim(),
           'user_password': passwordController.text.trim(),
         },
       );
@@ -58,7 +58,7 @@ class _LoginScreenState extends State<LoginScreen> {
           });
         } else {
           Fluttertoast.showToast(
-              msg: 'Invalid phone number or password. Try Again.');
+              msg: 'Incorrect username or password. Try Again.');
         }
       }
     } catch (e) {
@@ -88,7 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 children: [
                   // login screen header
                   SizedBox(
-                    height: 265,
+                    height: 263,
                     width: MediaQuery.of(context).size.width,
                     child: Image.asset('assets/Login.png'),
                   ),
@@ -97,8 +97,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   Text(
                     'User Login',
-                    style:
-                        getBoldStyle(fontSize: 30, color: Colors.blue),
+                    style: getBoldStyle(fontSize: 30, color: Colors.blue),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(16),
@@ -126,17 +125,17 @@ class _LoginScreenState extends State<LoginScreen> {
                                 children: [
                                   //phone
                                   TextFormField(
-                                    keyboardType: TextInputType.phone,
+                                    keyboardType: TextInputType.text,
                                     controller: phoneController,
                                     validator: (value) => value == ""
                                         ? "Please enter your phone number"
                                         : null,
                                     decoration: InputDecoration(
                                       prefixIcon: const Icon(
-                                        Icons.phone,
+                                        Icons.person,
                                         color: Colors.blue,
                                       ),
-                                      hintText: 'Phone Number',
+                                      hintText: 'Username',
                                       hintStyle: hintStyle(),
                                       border: outlinedBorder,
                                       enabledBorder: enabledBorder,
@@ -150,7 +149,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     ),
                                   ),
                                   const SizedBox(
-                                    height: 15,
+                                    height: 8,
                                   ),
                                   // password
                                   Obx(
@@ -218,7 +217,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             color: Colors.white,
-                                            fontSize: 16,
+                                            fontSize: 20,
                                           ),
                                         ),
                                       ),

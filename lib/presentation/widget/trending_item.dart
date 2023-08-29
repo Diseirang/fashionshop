@@ -116,7 +116,8 @@ Widget trendingMostPopularItemWidget(context) {
                             children: [
                               //item name & price
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Expanded(
                                     child: Text(
@@ -134,7 +135,7 @@ Widget trendingMostPopularItemWidget(context) {
                                     '\$ ${eachItemData.price.toString()}',
                                     style: const TextStyle(
                                       color: Colors.blue,
-                                      fontSize: 18,
+                                      fontSize: 20,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),

@@ -1,5 +1,5 @@
-import 'package:fashionshop/presentation/screen/cart_screen.dart';
 import 'package:fashionshop/presentation/screen/search_screen.dart';
+import 'package:fashionshop/user/cart/cart_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -29,6 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
       },
       child: Scaffold(
         appBar: AppBar(
+          // leading: ClipOval(child: Image.network(_currentUser.user.)),
           actions: [
             IconButton(
               onPressed: () => Get.to(const SearchScreen()),
@@ -38,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             IconButton(
-              onPressed: () => Get.to(const CartScreen()),
+              onPressed: () => Get.to(const CartListScreen()),
               icon: const Icon(
                 Icons.shopping_cart,
                 color: Colors.white,

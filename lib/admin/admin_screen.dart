@@ -20,7 +20,7 @@ class AdminLoginScreen extends StatefulWidget {
 
 class _AdminLoginScreenState extends State<AdminLoginScreen> {
   var formKey = GlobalKey<FormState>();
-  var phoneController = TextEditingController();
+  var usernameController = TextEditingController();
   var passwordController = TextEditingController();
   var isObsecure = true.obs;
 
@@ -29,8 +29,8 @@ class _AdminLoginScreenState extends State<AdminLoginScreen> {
       var resAdminData = await http.post(
         Uri.parse(API.adminlogin),
         body: {
-          'admin_phone': phoneController.text.trim().toString(),
-          'admin_password': passwordController.text.trim().toString(),
+          'admin_name': usernameController.text.trim(),
+          'admin_password': passwordController.text.trim(),
         },
       );
 
@@ -38,11 +38,11 @@ class _AdminLoginScreenState extends State<AdminLoginScreen> {
         var resBodyOfLogin = jsonDecode(resAdminData.body);
 
         if (resBodyOfLogin['login'] == true) {
-          Fluttertoast.showToast(msg: 'Login successfully.\n Have a nice day!');
+          Fluttertoast.showToast(msg: 'Login successful.\n Have a nice day!');
 
           setState(() {
             //clear text field
-            phoneController.clear();
+            usernameController.clear();
             passwordController.clear();
           });
 
@@ -51,7 +51,7 @@ class _AdminLoginScreenState extends State<AdminLoginScreen> {
           });
         } else {
           Fluttertoast.showToast(
-              msg: 'Invalid phone number or password.\nTry Again.');
+              msg: 'Incorrect username or password.\nTry Again.');
         }
       }
     } catch (e) {
@@ -61,7 +61,7 @@ class _AdminLoginScreenState extends State<AdminLoginScreen> {
 
   @override
   void dispose() {
-    phoneController.dispose();
+    usernameController.dispose();
     passwordController.dispose();
     super.dispose();
   }
@@ -119,17 +119,17 @@ class _AdminLoginScreenState extends State<AdminLoginScreen> {
                                 children: [
                                   //phone
                                   TextFormField(
-                                    keyboardType: TextInputType.phone,
-                                    controller: phoneController,
+                                    keyboardType: TextInputType.text,
+                                    controller: usernameController,
                                     validator: (value) => value == ""
                                         ? "Please enter your phone number"
                                         : null,
                                     decoration: InputDecoration(
                                       prefixIcon: const Icon(
-                                        Icons.phone,
+                                        Icons.person_4_rounded,
                                         color: Colors.blue,
                                       ),
-                                      hintText: 'Phone Number',
+                                      hintText: 'Username',
                                       hintStyle: hintStyle(),
                                       border: outlinedBorder,
                                       enabledBorder: enabledBorder,
@@ -143,7 +143,7 @@ class _AdminLoginScreenState extends State<AdminLoginScreen> {
                                     ),
                                   ),
                                   const SizedBox(
-                                    height: 15,
+                                    height: 8,
                                   ),
                                   // password
                                   Obx(
@@ -211,7 +211,7 @@ class _AdminLoginScreenState extends State<AdminLoginScreen> {
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             color: Colors.white,
-                                            fontSize: 16,
+                                            fontSize: 20,
                                           ),
                                         ),
                                       ),

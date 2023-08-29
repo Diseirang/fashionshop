@@ -4,7 +4,6 @@ import 'package:fashionshop/admin/admin_screen.dart';
 import 'package:fashionshop/api_connection/api_connection.dart';
 import 'package:fashionshop/presentation/resource/style_manager.dart';
 import 'package:fashionshop/presentation/resource/textbox_manager.dart';
-import 'package:fashionshop/presentation/resource/value_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -56,39 +55,56 @@ class _AdminUploadScreenState extends State<AdminUploadScreen> {
         context: context,
         builder: (context) {
           return SimpleDialog(
-            backgroundColor: Colors.black,
+            backgroundColor: Colors.white,
             title: const Text(
-              "Item Image",
+              "Choose Item Image",
               style: TextStyle(
-                color: Colors.deepPurple,
-                fontWeight: FontWeight.bold,
-              ),
+                  color: Colors.blue,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20),
             ),
             children: [
-              SimpleDialogOption(
-                onPressed: () {
-                  captureImageWithPhoneCamera();
-                },
-                child: const Text(
-                  "Capture with Phone Camera",
-                  style: TextStyle(
-                    color: Colors.grey,
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.amber[200],
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(15),
+                  ),
+                ),
+                child: SimpleDialogOption(
+                  onPressed: () {
+                    captureImageWithPhoneCamera();
+                  },
+                  child: const Text(
+                    "Capture with phone camera",
+                    style: TextStyle(
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 6),
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.amber[200],
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(15),
+                  ),
+                ),
+                child: SimpleDialogOption(
+                  onPressed: () {
+                    pickImageFromPhoneGallery();
+                  },
+                  child: const Text(
+                    "Pick image from phone gallery",
+                    style: TextStyle(
+                      color: Colors.black,
+                    ),
                   ),
                 ),
               ),
               const SizedBox(
-                height: AppSize.s12,
-              ),
-              SimpleDialogOption(
-                onPressed: () {
-                  pickImageFromPhoneGallery();
-                },
-                child: const Text(
-                  "Pick Image From Phone Gallery",
-                  style: TextStyle(
-                    color: Colors.grey,
-                  ),
-                ),
+                height: 6,
               ),
               SimpleDialogOption(
                 onPressed: () {
@@ -98,6 +114,8 @@ class _AdminUploadScreenState extends State<AdminUploadScreen> {
                   "Cancel",
                   style: TextStyle(
                     color: Colors.red,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
                   ),
                 ),
               ),
@@ -128,9 +146,9 @@ class _AdminUploadScreenState extends State<AdminUploadScreen> {
           child: const Text(
             "New Orders",
             style: TextStyle(
-              color: Colors.green,
+              color: Colors.white,
               fontSize: 16,
-              fontWeight: FontWeight.bold,
+              // fontWeight: FontWeight.bold,
             ),
           ),
         ),
@@ -142,7 +160,7 @@ class _AdminUploadScreenState extends State<AdminUploadScreen> {
             },
             icon: const Icon(
               Icons.logout,
-              color: Colors.redAccent,
+              color: Colors.white,
             ),
           ),
         ],
@@ -381,7 +399,8 @@ class _AdminUploadScreenState extends State<AdminUploadScreen> {
                             controller: nameController,
                             validator: (val) =>
                                 val == "" ? "Please write item name" : null,
-                            decoration: inputDecoration(Icons.title, 'item name'),
+                            decoration:
+                                inputDecoration(Icons.title, 'item name'),
                           ),
 
                           const SizedBox(
@@ -394,7 +413,8 @@ class _AdminUploadScreenState extends State<AdminUploadScreen> {
                             controller: ratingController,
                             validator: (val) =>
                                 val == "" ? "Please give item rating" : null,
-                            decoration: inputDecoration(Icons.rate_review, 'item rate...'),
+                            decoration: inputDecoration(
+                                Icons.rate_review, 'item rate...'),
                           ),
 
                           const SizedBox(
@@ -407,7 +427,8 @@ class _AdminUploadScreenState extends State<AdminUploadScreen> {
                             controller: tagsController,
                             validator: (val) =>
                                 val == "" ? "Please write item tags" : null,
-                            decoration: inputDecoration(Icons.tag, 'item tags...'),
+                            decoration:
+                                inputDecoration(Icons.tag, 'item tags...'),
                           ),
 
                           const SizedBox(
@@ -420,7 +441,8 @@ class _AdminUploadScreenState extends State<AdminUploadScreen> {
                             controller: priceController,
                             validator: (val) =>
                                 val == "" ? "Please write item price" : null,
-                            decoration: inputDecoration(Icons.price_change_outlined, 'item price...'),
+                            decoration: inputDecoration(
+                                Icons.price_change_outlined, 'item price...'),
                           ),
 
                           const SizedBox(
@@ -433,7 +455,8 @@ class _AdminUploadScreenState extends State<AdminUploadScreen> {
                             controller: sizesController,
                             validator: (val) =>
                                 val == "" ? "Please write item sizes" : null,
-                            decoration: inputDecoration(Icons.picture_in_picture, 'item sizes...'),
+                            decoration: inputDecoration(
+                                Icons.picture_in_picture, 'item sizes...'),
                           ),
 
                           const SizedBox(

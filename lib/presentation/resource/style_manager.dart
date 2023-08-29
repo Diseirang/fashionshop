@@ -16,7 +16,7 @@ TextStyle getTextStyle(
 // regular style
 
 TextStyle hintStyle() {
-  return getTextStyle(FontSize.s12, FontConstants.fontFamily,
+  return getTextStyle(FontSize.s14, FontConstants.fontFamily,
       FontWeightManager.regular, ColorManager.lightBlue);
 }
 

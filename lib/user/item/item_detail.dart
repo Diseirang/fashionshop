@@ -11,6 +11,7 @@ import '../../api_connection/api_connection.dart';
 import '../../presentation/resource/style_manager.dart';
 import '../controllers/item_details_controller.dart';
 import 'package:http/http.dart' as http;
+
 // ignore: must_be_immutable
 class ItemScreen extends StatefulWidget {
   final Item itemInfo;
@@ -23,39 +24,39 @@ class ItemScreen extends StatefulWidget {
 class _ItemScreenState extends State<ItemScreen> {
   final itemDetailsController = Get.put(ItemDetailsController());
   final currentOnlineUser = Get.put(CurrentUser());
-insertCart () async {
-  try {
+  insertCart() async {
+    try {
       var res = await http.post(
         Uri.parse(API.insertCart),
         body: {
-          'user_id':currentOnlineUser.user.userid.toString(),
-                 'item_id':widget.itemInfo.id.toString(),
-          'quantity':itemDetailsController.quantity.toString(),
-          'color':widget.itemInfo.colors[itemDetailsController.color].replaceAll('[' ,'').replaceAll(']', ''),
-          'size':widget.itemInfo.sizes[itemDetailsController.size].replaceAll('[' ,'').replaceAll(']', ''),
-
+          'user_id': currentOnlineUser.user.userid.toString(),
+          'item_id': widget.itemInfo.id.toString(),
+          'quantity': itemDetailsController.quantity.toString(),
+          'color': widget.itemInfo.colors[itemDetailsController.color]
+              .replaceAll('[', '')
+              .replaceAll(']', ''),
+          'size': widget.itemInfo.sizes[itemDetailsController.size]
+              .replaceAll('[', '')
+              .replaceAll(']', ''),
         },
       );
       if (res.statusCode == 200) {
         var resBodyOfInCart = jsonDecode(res.body);
 
         if (resBodyOfInCart['success'] == true) {
-          Fluttertoast.showToast(
-              msg: 'Cart added!');
+          Fluttertoast.showToast(msg: 'Item added to cart.');
         } else {
-          
-          Fluttertoast.showToast(msg: 'Error occur. Cart not added!');
+          Fluttertoast.showToast(
+              msg: 'Error occure!. Can not added item to cart.');
         }
-      }
-      else{
-        Fluttertoast.showToast(msg: 'Status is mot 200!');
+      } else {
+        Fluttertoast.showToast(msg: 'Status is not 200!');
       }
     } catch (e) {
       // print(e.toString());
-      Fluttertoast.showToast(msg: e.toString());
+      Fluttertoast.showToast(msg: 'Error!, ${e.toString()}');
     }
-}
- 
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +84,7 @@ insertCart () async {
             child: GestureDetector(
               child: Container(
                 decoration: BoxDecoration(
-                  color: const Color(0xFFF8F8F8),
+                  color: const Color(0xFFF8F8F8).withOpacity(.5),
                   borderRadius: BorderRadius.circular(10),
                   border: Border.all(
                     width: 2,
@@ -97,19 +98,21 @@ insertCart () async {
                   icon: const Icon(
                     CupertinoIcons.suit_heart,
                     color: Colors.orange,
+                    size: 30,
                   ),
                 ),
               ),
             ),
           ),
           Positioned(
-            top: 45,
-            left: 15,
+            top: 40,
+            left: 10,
             child: IconButton(
               onPressed: () => Get.back(),
               icon: const Icon(
-                Icons.arrow_back_ios_new,
-                color: Colors.black,
+                Icons.arrow_back_ios_new_rounded,
+                color: Colors.white,
+                size: 30,
               ),
             ),
           ),
@@ -121,18 +124,19 @@ insertCart () async {
               width: MediaQuery.of(context).size.width,
               padding: const EdgeInsets.symmetric(horizontal: 20),
               decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(25),
-                    topRight: Radius.circular(25),
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(25),
+                  topRight: Radius.circular(25),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey,
+                    offset: Offset(2, -3),
+                    blurRadius: 6,
                   ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey,
-                      offset: Offset(2, -3),
-                      blurRadius: 6,
-                    ),
-                  ]),
+                ],
+              ),
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -225,9 +229,9 @@ insertCart () async {
                           ],
                         ),
 
-                        const SizedBox(
-                          height: 8,
-                        ),
+                        // const SizedBox(
+                        //   height: 8,
+                        // ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -308,7 +312,7 @@ insertCart () async {
                           ],
                         ),
                         const SizedBox(
-                          height: 10,
+                          height: 6,
                         ),
                         const Text(
                           'Size',
@@ -333,13 +337,13 @@ insertCart () async {
                                 },
                                 child: Container(
                                   height: 40,
-                                  width: 70,
+                                  width: 50,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
                                     border: Border.all(
                                       width: 2,
                                       color: itemDetailsController.size == index
-                                          ? Colors.blueAccent
+                                          ? Colors.amber
                                           : Colors.grey,
                                     ),
                                     color: itemDetailsController.size == index
@@ -362,7 +366,7 @@ insertCart () async {
                           }),
                         ),
 
-                        const SizedBox(height: 20),
+                        const SizedBox(height: 16),
 
                         //colors
                         const Text(
@@ -394,7 +398,7 @@ insertCart () async {
                                       width: 2,
                                       color:
                                           itemDetailsController.color == index
-                                              ? Colors.transparent
+                                              ? Colors.amber
                                               : Colors.grey,
                                     ),
                                     color: itemDetailsController.color == index
@@ -417,7 +421,7 @@ insertCart () async {
                           }),
                         ),
                         const SizedBox(
-                          height: 20,
+                          height: 16,
                         ),
                         const Text(
                           'Description',
@@ -432,7 +436,7 @@ insertCart () async {
                           style: const TextStyle(fontSize: 18),
                         ),
                         const SizedBox(
-                          height: 30,
+                          height: 20,
                         ),
                         Padding(
                           padding: const EdgeInsets.only(bottom: 20),
@@ -443,13 +447,28 @@ insertCart () async {
                                 alignment: Alignment.center,
                                 height: 50,
                                 decoration: BoxDecoration(
-                                  color: Colors.blueAccent,
+                                  color: Colors.amber,
                                   borderRadius: BorderRadius.circular(15),
                                 ),
-                                child: const Text(
-                                  'Add to Cart',
-                                  style: TextStyle(
-                                     fontWeight: FontWeight.bold, fontSize: 24, color: Colors.white),
+                                child: const Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.add_shopping_cart_rounded,
+                                      size: 22,
+                                      color: Colors.white,
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(
+                                      'Add to Cart',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 22,
+                                          color: Colors.white),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
