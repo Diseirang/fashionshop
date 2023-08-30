@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:fashionshop/presentation/resource/style_manager.dart';
 import 'package:fashionshop/user/model/cart.dart';
 import 'package:fashionshop/user/model/item.dart';
 import 'package:fashionshop/user/userPrefereences/current_user.dart';
@@ -27,7 +28,7 @@ class _CartListScreenState extends State<CartListScreen> {
       var res = await http.post(
         Uri.parse(API.fetchCart),
         body: {
-          'currentOnlineUserID': currentOnlineUser.user.userid.toString(),
+          'currenOnlineUserID': currentOnlineUser.user.userid.toString(),
         },
       );
       if (res.statusCode == 200) {
@@ -70,6 +71,11 @@ class _CartListScreenState extends State<CartListScreen> {
     getCurrenUserCartList();
   }
 
+@override
+void initState() {
+  super.initState();
+  getCurrenUserCartList();
+}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,15 +90,15 @@ class _CartListScreenState extends State<CartListScreen> {
               color: Colors.white,
             ),
           ),
-          actions: [
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.paid_rounded,
-                color: Colors.white,
-              ),
-            ),
-          ],
+          // actions: [
+          //   IconButton(
+          //     onPressed: () {},
+          //     icon: const Icon(
+          //       Icons.paid_rounded,
+          //       color: Colors.white,
+          //     ),
+          //   ),
+          // ],
           automaticallyImplyLeading: false,
           title: const Text(
             'Cart List',
@@ -164,62 +170,55 @@ class _CartListScreenState extends State<CartListScreen> {
                                 ),
                                 child: Row(
                                   children: [
-                                    Expanded(
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(10),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            // item name
-                                            Text(
-                                              itemModel.name.toString(),
-                                              maxLines: 2,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: const TextStyle(
-                                                fontSize: 18,
-                                                color: Colors.grey,
-                                                fontWeight: FontWeight.bold,
+                                    Padding(
+                                      padding: const EdgeInsets.all(10),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            itemModel.name.toString(),
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: const TextStyle(
+                                              fontSize: 18,
+                                              color: Colors.grey,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            height: 20,
+                                          ),
+                                          Row(
+                                            children: [
+                                              Expanded(
+                                                child: Text(
+                                                  "Color: ${cartModel.color.replaceAll('[', '').replaceAll(']', '')} \n Size: ${cartModel.size.replaceAll('[', '').replaceAll(']', '')}",
+                                                  maxLines: 3,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  style: const TextStyle(
+                                                    color: Colors.white60,
+                                                  ),
+                                                ),
                                               ),
-                                            ),
-                                            const SizedBox(
-                                              height: 20,
-                                            ),
-                                            Row(
-                                              children: [
-                                                // color size + price
-                                                Expanded(
-                                                  child: Text(
-                                                    "Color: ${cartModel.color.replaceAll('[', '').replaceAll(']', '')} \n Size: ${cartModel.size.replaceAll('[', '').replaceAll(']', '')}",
-                                                    maxLines: 3,
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    style: const TextStyle(
-                                                      color: Colors.white60,
-                                                    ),
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                  left: 12.0,
+                                                  right: 12.0,
+                                                ),
+                                                child: Text(
+                                                  '\$ ${itemModel.price.toString()}',
+                                                  style: const TextStyle(
+                                                    fontSize: 20,
+                                                    color: Colors.purpleAccent,
+                                                    fontWeight: FontWeight.bold,
                                                   ),
                                                 ),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                    left: 12.0,
-                                                    right: 12.0,
-                                                  ),
-                                                  child: Text(
-                                                    '\$ ${itemModel.price.toString()}',
-                                                    style: const TextStyle(
-                                                      fontSize: 20,
-                                                      color:
-                                                          Colors.purpleAccent,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            )
-                                          ],
-                                        ),
+                                              ),
+                                            ],
+                                          )
+                                        ],
                                       ),
                                     ),
                                   ],
