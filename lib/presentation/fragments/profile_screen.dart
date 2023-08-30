@@ -5,7 +5,8 @@ import 'package:fashionshop/user/userPrefereences/current_user.dart';
 import 'package:fashionshop/user/userPrefereences/user_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../presentation/resource/style_manager.dart';
+
+import '../resource/style_manager.dart';
 
 class ProfileScreen extends StatelessWidget {
   ProfileScreen({super.key});

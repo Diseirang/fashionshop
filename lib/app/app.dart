@@ -1,8 +1,7 @@
-import 'package:fashionshop/user/fragments/dashboard_screen.dart';
 import 'package:fashionshop/user/userPrefereences/user_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import '../presentation/fragments/dashboard_screen.dart';
 import '../user/authentication/login_screen.dart';
 
 class MyApp extends StatelessWidget {
@@ -20,12 +19,9 @@ class MyApp extends StatelessWidget {
       home: FutureBuilder(
         future: RememberUserPrefs.readUserInfo(),
         builder: (context, dataSnapShot) {
-          if(dataSnapShot.data==null)
-          {
+          if (dataSnapShot.data == null) {
             return const LoginScreen();
-          }
-          else
-          {
+          } else {
             return const DashboardScreen();
           }
         },

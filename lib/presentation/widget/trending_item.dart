@@ -61,7 +61,7 @@ Widget trendingMostPopularItemWidget(context) {
                     Get.to(ItemScreen(eachItemData));
                   },
                   child: Container(
-                    height: 320,
+                    // height: 220,
                     width: 200,
                     margin: EdgeInsets.fromLTRB(
                       index == 0 ? 16 : 8,
@@ -72,7 +72,7 @@ Widget trendingMostPopularItemWidget(context) {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       color: Colors.white,
-                      border: Border.all(width: 3, color: Colors.blue),
+                      border: Border.all(width: 2.5, color: Colors.amber),
                       boxShadow: [
                         BoxShadow(
                           offset: const Offset(2, 2),
@@ -95,7 +95,7 @@ Widget trendingMostPopularItemWidget(context) {
                             fit: BoxFit.cover,
                             placeholder:
                                 const AssetImage('assets/placeholder.jpeg'),
-                            image: NetworkImage(eachItemData.image),
+                            image: NetworkImage(eachItemData.image!),
                             imageErrorBuilder:
                                 (context, error, stackTraceError) {
                               return const Center(
@@ -121,7 +121,7 @@ Widget trendingMostPopularItemWidget(context) {
                                 children: [
                                   Expanded(
                                     child: Text(
-                                      eachItemData.name,
+                                      eachItemData.name!,
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
                                       style: const TextStyle(
@@ -135,7 +135,7 @@ Widget trendingMostPopularItemWidget(context) {
                                     '\$ ${eachItemData.price.toString()}',
                                     style: const TextStyle(
                                       color: Colors.blue,
-                                      fontSize: 20,
+                                      fontSize: 18,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
@@ -150,7 +150,7 @@ Widget trendingMostPopularItemWidget(context) {
                               Row(
                                 children: [
                                   RatingBar.builder(
-                                    initialRating: eachItemData.rating,
+                                    initialRating: eachItemData.rating!,
                                     minRating: 1,
                                     direction: Axis.horizontal,
                                     allowHalfRating: true,

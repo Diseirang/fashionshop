@@ -27,7 +27,7 @@ class _CartListScreenState extends State<CartListScreen> {
       var res = await http.post(
         Uri.parse(API.fetchCart),
         body: {
-          'currenOnlineUserID': currentOnlineUser.user.userid.toString(),
+          'currentOnlineUserID': currentOnlineUser.user.userid.toString(),
         },
       );
       if (res.statusCode == 200) {
@@ -35,7 +35,7 @@ class _CartListScreenState extends State<CartListScreen> {
         if (responeBodyOfGetCurrenOnlineUserCartItems['success'] == true) {
           for (var eachCurrentUserCartItem
               in (responeBodyOfGetCurrenOnlineUserCartItems[
-                  'currentUserCartData'] as List)) {
+                  'currentOnlineUserID'] as List)) {
             cartListOfCurrentUser.add(Cart.fromJson(eachCurrentUserCartItem));
           }
         } else {
@@ -62,6 +62,12 @@ class _CartListScreenState extends State<CartListScreen> {
         }
       }
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getCurrenUserCartList();
   }
 
   @override
@@ -124,10 +130,9 @@ class _CartListScreenState extends State<CartListScreen> {
                                           .contains(cartModel.itemid)
                                       ? Icons.check_box
                                       : Icons.check_box_outline_blank,
-                                  color:
-                                      cartListController.isSelectedAll.isFalse
-                                          ? Colors.white
-                                          : Colors.grey,
+                                  color: cartListController.isselectedall
+                                      ? Colors.white
+                                      : Colors.grey,
                                 ),
                               );
                             },
@@ -140,7 +145,7 @@ class _CartListScreenState extends State<CartListScreen> {
                                 margin: EdgeInsets.fromLTRB(
                                     0,
                                     index == 0 ? 16 : 8,
-                                    0,
+                                    16,
                                     index ==
                                             cartListController.cartList.length -
                                                 1
@@ -159,55 +164,62 @@ class _CartListScreenState extends State<CartListScreen> {
                                 ),
                                 child: Row(
                                   children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(10),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            itemModel.name.toString(),
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: const TextStyle(
-                                              fontSize: 18,
-                                              color: Colors.grey,
-                                              fontWeight: FontWeight.bold,
+                                    Expanded(
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(10),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            // item name
+                                            Text(
+                                              itemModel.name.toString(),
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: const TextStyle(
+                                                fontSize: 18,
+                                                color: Colors.grey,
+                                                fontWeight: FontWeight.bold,
+                                              ),
                                             ),
-                                          ),
-                                          const SizedBox(
-                                            height: 20,
-                                          ),
-                                          Row(
-                                            children: [
-                                              Expanded(
-                                                child: Text(
-                                                  "Color: ${cartModel.color.replaceAll('[', '').replaceAll(']', '')} \n Size: ${cartModel.size.replaceAll('[', '').replaceAll(']', '')}",
-                                                  maxLines: 3,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  style: const TextStyle(
-                                                    color: Colors.white60,
+                                            const SizedBox(
+                                              height: 20,
+                                            ),
+                                            Row(
+                                              children: [
+                                                // color size + price
+                                                Expanded(
+                                                  child: Text(
+                                                    "Color: ${cartModel.color.replaceAll('[', '').replaceAll(']', '')} \n Size: ${cartModel.size.replaceAll('[', '').replaceAll(']', '')}",
+                                                    maxLines: 3,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    style: const TextStyle(
+                                                      color: Colors.white60,
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                  left: 12.0,
-                                                  right: 12.0,
-                                                ),
-                                                child: Text(
-                                                  '\$ ${itemModel.price.toString()}',
-                                                  style: const TextStyle(
-                                                    fontSize: 20,
-                                                    color: Colors.purpleAccent,
-                                                    fontWeight: FontWeight.bold,
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                    left: 12.0,
+                                                    right: 12.0,
+                                                  ),
+                                                  child: Text(
+                                                    '\$ ${itemModel.price.toString()}',
+                                                    style: const TextStyle(
+                                                      fontSize: 20,
+                                                      color:
+                                                          Colors.purpleAccent,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
-                                            ],
-                                          )
-                                        ],
+                                              ],
+                                            )
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -221,7 +233,7 @@ class _CartListScreenState extends State<CartListScreen> {
                   },
                 )
               : const Center(
-                  child: Text('Empty card!'),
+                  child: Text('Cart is empty!'),
                 ),
         ));
   }

@@ -30,7 +30,7 @@ class Cart {
       this.description,
       this.image);
 
-      factory Cart.fromJson(Map<String, dynamic> json) => Cart(
+  factory Cart.fromJson(Map<String, dynamic> json) => Cart(
         int.parse(json['cart_id']),
         int.parse(json['user_id']),
         int.parse(json['item_id']),

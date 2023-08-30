@@ -1,11 +1,11 @@
-import 'package:fashionshop/user/fragments/favorites_screen.dart';
-import 'package:fashionshop/user/fragments/home_screen.dart';
-import 'package:fashionshop/user/fragments/order_screen.dart';
-import 'package:fashionshop/user/fragments/profile_screen.dart';
-import 'package:flutter/material.dart';
+ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../userPrefereences/current_user.dart';
+import '../../../user/userPrefereences/current_user.dart';
+import 'favorites_screen.dart';
+import 'home_screen.dart';
+import 'order_screen.dart';
+import 'profile_screen.dart';
 
 // ignore: must_be_immutable
 class DashboardScreen extends StatefulWidget {

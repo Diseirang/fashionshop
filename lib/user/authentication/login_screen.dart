@@ -10,8 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import '../../presentation/fragments/dashboard_screen.dart';
 import '../model/user.dart';
-import '../fragments/dashboard_screen.dart';
 import 'signup_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -41,7 +41,7 @@ class _LoginScreenState extends State<LoginScreen> {
         var resBodyOfLogin = jsonDecode(resUserData.body);
 
         if (resBodyOfLogin['login'] == true) {
-          Fluttertoast.showToast(msg: 'Login successfully.\n Have a nice day!');
+          Fluttertoast.showToast(msg: 'Login successfully.');
 
           User userInfo = User.fromJson(resBodyOfLogin['userData']);
 

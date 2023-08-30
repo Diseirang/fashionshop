@@ -1,13 +1,13 @@
 class Item {
-  int id;
-  String name;
-  double rating;
-  List<String> tags;
-  double price;
-  List<String> sizes;
-  List<String> colors;
-  String description;
-  String image;
+  int? id;
+  String? name;
+  double? rating;
+  List<String>? tags;
+  double? price;
+  List<String>? sizes;
+  List<String>? colors;
+  String? description;
+  String? image;
 
   Item(
     this.id,
@@ -25,10 +25,12 @@ class Item {
         int.parse(json['item_id']),
         json['name'],
         double.parse(json['rating']),
-        json['tags'].toString().split(', '),
+        json['tags'].toString().split(
+              ',',
+            ),
         double.parse(json['price']),
-        json['sizes'].toString().split(', '),
-        json['colors'].toString().split(', '),
+        json['sizes'].toString().split(','),
+        json['colors'].toString().split(','),
         json['description'],
         json['image'],
       );

@@ -32,10 +32,10 @@ class _ItemScreenState extends State<ItemScreen> {
           'user_id': currentOnlineUser.user.userid.toString(),
           'item_id': widget.itemInfo.id.toString(),
           'quantity': itemDetailsController.quantity.toString(),
-          'color': widget.itemInfo.colors[itemDetailsController.color]
+          'color': widget.itemInfo.colors![itemDetailsController.color]
               .replaceAll('[', '')
               .replaceAll(']', ''),
-          'size': widget.itemInfo.sizes[itemDetailsController.size]
+          'size': widget.itemInfo.sizes![itemDetailsController.size]
               .replaceAll('[', '')
               .replaceAll(']', ''),
         },
@@ -69,7 +69,7 @@ class _ItemScreenState extends State<ItemScreen> {
             width: MediaQuery.of(context).size.width,
             fit: BoxFit.cover,
             placeholder: const AssetImage('assets/placeholder.jpeg'),
-            image: NetworkImage(widget.itemInfo.image),
+            image: NetworkImage(widget.itemInfo.image!),
             imageErrorBuilder: (context, error, stackTraceError) {
               return const Center(
                 child: Icon(
@@ -170,7 +170,7 @@ class _ItemScreenState extends State<ItemScreen> {
                               child: Text(
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
-                                widget.itemInfo.name.toUpperCase(),
+                                widget.itemInfo.name!.toUpperCase(),
                                 style: getBoldStyle(
                                     fontSize: 26, color: Colors.black),
                               ),
@@ -189,7 +189,7 @@ class _ItemScreenState extends State<ItemScreen> {
                                 Row(
                                   children: [
                                     RatingBar.builder(
-                                      initialRating: widget.itemInfo.rating,
+                                      initialRating: widget.itemInfo.rating!,
                                       minRating: 1,
                                       direction: Axis.horizontal,
                                       allowHalfRating: true,
@@ -328,7 +328,7 @@ class _ItemScreenState extends State<ItemScreen> {
                         Wrap(
                           runSpacing: 8,
                           spacing: 8,
-                          children: List.generate(widget.itemInfo.sizes.length,
+                          children: List.generate(widget.itemInfo.sizes!.length,
                               (index) {
                             return Obx(
                               () => GestureDetector(
@@ -352,7 +352,7 @@ class _ItemScreenState extends State<ItemScreen> {
                                   ),
                                   alignment: Alignment.center,
                                   child: Text(
-                                    widget.itemInfo.sizes[index]
+                                    widget.itemInfo.sizes![index]
                                         .replaceAll("[", "")
                                         .replaceAll("]", ""),
                                     style: const TextStyle(
@@ -380,8 +380,8 @@ class _ItemScreenState extends State<ItemScreen> {
                         Wrap(
                           runSpacing: 8,
                           spacing: 8,
-                          children: List.generate(widget.itemInfo.colors.length,
-                              (index) {
+                          children: List.generate(
+                              widget.itemInfo.colors!.length, (index) {
                             return Obx(
                               () => GestureDetector(
                                 onTap: () {
@@ -407,7 +407,7 @@ class _ItemScreenState extends State<ItemScreen> {
                                   ),
                                   alignment: Alignment.center,
                                   child: Text(
-                                    widget.itemInfo.colors[index]
+                                    widget.itemInfo.colors![index]
                                         .replaceAll("[", "")
                                         .replaceAll("]", ""),
                                     style: const TextStyle(
@@ -432,7 +432,7 @@ class _ItemScreenState extends State<ItemScreen> {
                           height: 8,
                         ),
                         Text(
-                          widget.itemInfo.description,
+                          widget.itemInfo.description!,
                           style: const TextStyle(fontSize: 18),
                         ),
                         const SizedBox(

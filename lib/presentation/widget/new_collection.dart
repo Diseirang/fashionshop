@@ -62,12 +62,12 @@ Widget getAllItemWidget(context) {
               child: Container(
                 margin: EdgeInsets.fromLTRB(
                   16,
-                  index == 0 ? 16 : 8,
+                  index == 0 ? 8 : 4,
                   16,
                   index == dataSnapShot.data!.length - 1 ? 16 : 8,
                 ),
                 decoration: BoxDecoration(
-                  border: Border.all(width: 3, color: Colors.blue),
+                  border: Border.all(width: 2, color: Colors.amber),
                   borderRadius: BorderRadius.circular(20),
                   color: Colors.white,
                   boxShadow: [
@@ -81,26 +81,50 @@ Widget getAllItemWidget(context) {
 
                 child: Row(
                   children: [
+                    ClipRRect(
+                      borderRadius: const BorderRadius.only(
+                        bottomRight: Radius.circular(16),
+                        topRight: Radius.circular(16),
+                        topLeft: Radius.circular(17),
+                        bottomLeft: Radius.circular(17),
+                      ),
+                      child: FadeInImage(
+                        height: 90,
+                        width: 90,
+                        fit: BoxFit.cover,
+                        placeholder:
+                            const AssetImage('assets/placeholder.jpeg'),
+                        image: NetworkImage(eachItemData.image!),
+                        imageErrorBuilder: (context, error, stackTraceError) {
+                          return const Center(
+                            child: Icon(
+                              Icons.broken_image_outlined,
+                            ),
+                          );
+                        },
+                      ),
+                    ),
                     Expanded(
                       child: Padding(
                         padding: const EdgeInsets.only(left: 16, right: 16),
                         child: Container(
-                          padding: const EdgeInsets.only(top:12),
-                          height: 100,
+                          padding: const EdgeInsets.only(top: 8),
+                          height: 80,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Expanded(
                                     child: Text(
-                                      eachItemData.name,
+                                      eachItemData.name!,
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       style: const TextStyle(
                                         color: Colors.black,
-                                        fontSize: 22,
+                                        fontSize: 18,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
@@ -108,7 +132,8 @@ Widget getAllItemWidget(context) {
                                 ],
                               ),
                               Padding(
-                                padding: const EdgeInsets.only(top: 6, bottom: 6),
+                                padding:
+                                    const EdgeInsets.only(top: 6, bottom: 6),
                                 child: Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
@@ -117,19 +142,20 @@ Widget getAllItemWidget(context) {
                                       '\$ ${eachItemData.price.toString()}',
                                       style: const TextStyle(
                                         color: Colors.blue,
-                                        fontSize: 20,
+                                        fontSize: 16,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                     Row(
                                       children: [
                                         RatingBar.builder(
-                                          initialRating: eachItemData.rating,
+                                          initialRating: eachItemData.rating!,
                                           minRating: 1,
                                           direction: Axis.horizontal,
                                           allowHalfRating: true,
                                           itemCount: 5,
-                                          itemBuilder: (context, c) => const Icon(
+                                          itemBuilder: (context, c) =>
+                                              const Icon(
                                             Icons.star,
                                             color: Colors.amber,
                                           ),
@@ -152,40 +178,19 @@ Widget getAllItemWidget(context) {
                                 ),
                               ),
                               Text(
-                               ' ${eachItemData.tags}'
-                                   .toString()
-                                   .replaceAll('[', '')
-                                   .replaceAll(']', ''),
-                               style: TextStyle(
-                                 color: ColorManager.grey,
-                                 fontSize: 14,
-                                 // fontWeight: FontWeight.bold,
-                               ),
-                                  ),
+                                ' ${eachItemData.tags}'
+                                    .toString()
+                                    .replaceAll('[', '')
+                                    .replaceAll(']', ''),
+                                style: TextStyle(
+                                  color: ColorManager.grey,
+                                  fontSize: 12,
+                                  // fontWeight: FontWeight.bold,
+                                ),
+                              ),
                             ],
                           ),
                         ),
-                      ),
-                    ),
-                    ClipRRect(
-                      borderRadius: const BorderRadius.only(
-                        bottomRight: Radius.circular(16),
-                        topRight: Radius.circular(16),
-                      ),
-                      child: FadeInImage(
-                        height: 100.0,
-                        width: 100.0,
-                        fit: BoxFit.cover,
-                        placeholder:
-                            const AssetImage('assets/placeholder.jpeg'),
-                        image: NetworkImage(eachItemData.image),
-                        imageErrorBuilder: (context, error, stackTraceError) {
-                          return const Center(
-                            child: Icon(
-                              Icons.broken_image_outlined,
-                            ),
-                          );
-                        },
                       ),
                     ),
                   ],
