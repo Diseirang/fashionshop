@@ -41,7 +41,7 @@ class _LoginScreenState extends State<LoginScreen> {
         var resBodyOfLogin = jsonDecode(resUserData.body);
 
         if (resBodyOfLogin['login'] == true) {
-          Fluttertoast.showToast(msg: 'Login successfully.\n Have a nice day!');
+          Fluttertoast.showToast(msg: 'Login successfully.');
 
           User userInfo = User.fromJson(resBodyOfLogin['userData']);
 

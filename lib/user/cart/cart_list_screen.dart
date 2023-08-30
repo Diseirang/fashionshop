@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:fashionshop/presentation/resource/style_manager.dart';
 import 'package:fashionshop/user/model/cart.dart';
 import 'package:fashionshop/user/model/item.dart';
 import 'package:fashionshop/user/userPrefereences/current_user.dart';
@@ -27,7 +28,7 @@ class _CartListScreenState extends State<CartListScreen> {
       var res = await http.post(
         Uri.parse(API.fetchCart),
         body: {
-          'currenOnlineUserID': currentOnlineUser.user.userid.toString(),
+          'currentOnlineUserID': currentOnlineUser.user.userid ,
         },
       );
       if (res.statusCode == 200) {
@@ -64,6 +65,11 @@ class _CartListScreenState extends State<CartListScreen> {
     }
   }
 
+@override
+void initState() {
+  super.initState();
+  getCurrenUserCartList();
+}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,15 +84,15 @@ class _CartListScreenState extends State<CartListScreen> {
               color: Colors.white,
             ),
           ),
-          actions: [
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.paid_rounded,
-                color: Colors.white,
-              ),
-            ),
-          ],
+          // actions: [
+          //   IconButton(
+          //     onPressed: () {},
+          //     icon: const Icon(
+          //       Icons.paid_rounded,
+          //       color: Colors.white,
+          //     ),
+          //   ),
+          // ],
           automaticallyImplyLeading: false,
           title: const Text(
             'Cart List',
@@ -140,7 +146,7 @@ class _CartListScreenState extends State<CartListScreen> {
                                 margin: EdgeInsets.fromLTRB(
                                     0,
                                     index == 0 ? 16 : 8,
-                                    0,
+                                    16,
                                     index ==
                                             cartListController.cartList.length -
                                                 1
@@ -169,11 +175,7 @@ class _CartListScreenState extends State<CartListScreen> {
                                             itemModel.name.toString(),
                                             maxLines: 2,
                                             overflow: TextOverflow.ellipsis,
-                                            style: const TextStyle(
-                                              fontSize: 18,
-                                              color: Colors.grey,
-                                              fontWeight: FontWeight.bold,
-                                            ),
+                                            style: getBoldStyle(fontSize: 18, color: Colors.black),
                                           ),
                                           const SizedBox(
                                             height: 20,
