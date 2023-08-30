@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:fashionshop/presentation/resource/style_manager.dart';
 import 'package:fashionshop/user/model/cart.dart';
 import 'package:fashionshop/user/model/item.dart';
 import 'package:fashionshop/user/userPrefereences/current_user.dart';
@@ -71,11 +70,6 @@ class _CartListScreenState extends State<CartListScreen> {
     getCurrenUserCartList();
   }
 
-@override
-void initState() {
-  super.initState();
-  getCurrenUserCartList();
-}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
