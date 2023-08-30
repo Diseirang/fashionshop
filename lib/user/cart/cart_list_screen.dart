@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:fashionshop/user/model/cart.dart';
 import 'package:fashionshop/user/model/item.dart';
 import 'package:fashionshop/user/userPrefereences/current_user.dart';
