@@ -4,6 +4,7 @@ import 'package:fashionshop/user/cart/cart_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import '../screen/search_screen.dart';
 import '../widget/new_collection.dart';
 import '../widget/subtitle.dart';
 import '../widget/trending_item.dart';
@@ -32,13 +33,13 @@ class _HomeScreenState extends State<HomeScreen> {
         appBar: AppBar(
           // leading: ClipOval(child: Image.network(_currentUser.user.)),
           actions: [
-            // IconButton(
-            //   onPressed: () => Get.to(() => const SearchScreen()),
-            //   icon: const Icon(
-            //     Icons.search,
-            //     color: Colors.white,
-            //   ),
-            // ),
+            IconButton(
+              onPressed: () => Get.to(() => const SearchScreen()),
+              icon: const Icon(
+                Icons.search,
+                color: Colors.white,
+              ),
+            ),
             IconButton(
               onPressed: () => Get.to(() => const CartListScreen()),
               icon: const Icon(

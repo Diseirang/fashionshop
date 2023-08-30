@@ -354,15 +354,20 @@ class _AdminUploadScreenState extends State<AdminUploadScreen> {
       body: ListView(
         children: [
           //image
-          Container(
-            height: MediaQuery.of(context).size.height * 0.4,
-            width: MediaQuery.of(context).size.width * 0.8,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: FileImage(
-                  File(_pickedImageXFile!.path),
+          GestureDetector(
+            onLongPress: () {
+              showDialogBoxForImagePickingAndCapturing();
+            },
+            child: Container(
+              height: MediaQuery.of(context).size.height * 0.4,
+              width: MediaQuery.of(context).size.width * 0.8,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: FileImage(
+                    File(_pickedImageXFile!.path),
+                  ),
+                  fit: BoxFit.cover,
                 ),
-                fit: BoxFit.cover,
               ),
             ),
           ),

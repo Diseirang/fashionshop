@@ -17,6 +17,12 @@ class CartListScreen extends StatefulWidget {
 }
 
 class _CartListScreenState extends State<CartListScreen> {
+  @override
+  void initState() {
+    super.initState();
+    getCurrenUserCartList();
+  }
+
   final currentOnlineUser = Get.put(CurrentUser());
   final cartListController = Get.put(CartListController());
 
@@ -26,19 +32,23 @@ class _CartListScreenState extends State<CartListScreen> {
       var res = await http.post(
         Uri.parse(API.fetchCart),
         body: {
-          'currenOnlineUserID': currentOnlineUser.user.userid.toString(),
+          'currentOnlineUserID': currentOnlineUser.user.userid.toString(),
         },
       );
       // print("User ID : ${res.body}");
       if (res.statusCode == 200) {
         var responeBodyOfGetCurrenOnlineUserCartItems = jsonDecode(res.body);
+        print(responeBodyOfGetCurrenOnlineUserCartItems);
         if (responeBodyOfGetCurrenOnlineUserCartItems['success'] == true) {
           for (var eachCurrentUserCartItemData
-              in (responeBodyOfGetCurrenOnlineUserCartItems[
-                  'currentOnlineUserID'] as List)) {
-            cartListOfCurrentUser.add(Cart.fromJson(eachCurrentUserCartItemData));
+              in ((responeBodyOfGetCurrenOnlineUserCartItems[
+                      'currenOnlineUserID'] ??
+                  []) as List)) {
+            cartListOfCurrentUser
+                .add(Cart.fromJson(eachCurrentUserCartItemData));
+            print(eachCurrentUserCartItemData);
+            print(cartListOfCurrentUser);
           }
-          // print('Success');
         } else {
           Fluttertoast.showToast(msg: "Error occured while executing query.");
         }
@@ -48,7 +58,7 @@ class _CartListScreenState extends State<CartListScreen> {
       }
     } catch (e) {
       Fluttertoast.showToast(msg: "Error, ${e.toString()}");
-      // print(e.toString());
+      print(e.toString());
     }
     calculateTotalAmoung();
   }
@@ -58,18 +68,12 @@ class _CartListScreenState extends State<CartListScreen> {
     if (cartListController.selectedItemList.isEmpty) {
       for (var itemInCart in cartListController.cartlist) {
         if (cartListController.selectedItemList.contains(itemInCart.itemid)) {
-          double eachItemTotalAmoung = itemInCart.price * itemInCart.quantity;
+          double eachItemTotalAmoung = (itemInCart.price!) * (double.parse(itemInCart.quantity.toString()));
           cartListController
               .setTotal(cartListController.total + eachItemTotalAmoung);
         }
       }
     }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    getCurrenUserCartList();
   }
 
   @override
@@ -110,15 +114,15 @@ class _CartListScreenState extends State<CartListScreen> {
                     Cart cartModel = cartListController.cartlist[index];
 
                     Item itemModel = Item(
-                        cartModel.itemid,
-                        cartModel.name,
-                        cartModel.rating,
-                        cartModel.tags,
-                        cartModel.price,
-                        cartModel.sizes,
-                        cartModel.colors,
-                        cartModel.description,
-                        cartModel.image);
+                        id: cartModel.itemid,
+                        name: cartModel.name,
+                        rating: cartModel.rating,
+                        tags: cartModel.tags,
+                        price: cartModel.price,
+                        sizes: cartModel.sizes,
+                        colors: cartModel.colors,
+                        description: cartModel.description,
+                        image: cartModel.image);
                     return SizedBox(
                       width: MediaQuery.of(context).size.width,
                       child: Row(
@@ -189,7 +193,7 @@ class _CartListScreenState extends State<CartListScreen> {
                                             children: [
                                               Expanded(
                                                 child: Text(
-                                                  "Color: ${cartModel.color.replaceAll('[', '').replaceAll(']', '')} \n Size: ${cartModel.size.replaceAll('[', '').replaceAll(']', '')}",
+                                                  "Color: ${cartModel.color!.replaceAll('[', '').replaceAll(']', '')} \n Size: ${cartModel.size!.replaceAll('[', '').replaceAll(']', '')}",
                                                   maxLines: 3,
                                                   overflow:
                                                       TextOverflow.ellipsis,
@@ -222,6 +226,8 @@ class _CartListScreenState extends State<CartListScreen> {
                               ),
                             ),
                           ),
+                        
+                        
                         ],
                       ),
                     );
