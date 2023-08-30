@@ -4,34 +4,34 @@ import '../model/cart.dart';
 
 class CartListController extends GetxController {
   RxList<Cart> cartList = <Cart>[].obs;
-  RxList<int> selectedItemList = <int>[].obs;
-  RxBool isSelectedAll = false.obs;
+  RxList<int> selectedItemLists = <int>[].obs;
+  RxBool isSelectedAllItem = false.obs;
   RxDouble totalPrice = 0.0.obs;
 
   List<Cart> get cartlist => cartList;
-  List<int> get selecteditemlist => selectedItemList;
-  bool get isselectedall => isSelectedAll.value;
-  double get totalprice => totalPrice.value;
+  List<int> get selectedItemList => selectedItemLists;
+  bool get isSelectedAll => isSelectedAllItem.value;
+  double get total => totalPrice.value;
 
   setList(List<Cart> list) {
     cartList.value = list;
   }
 
   addSelectedItem(int itemSelectID) {
-    selectedItemList.add(itemSelectID);
+    selectedItemLists.add(itemSelectID);
     update();
   }
 
   deletedSelectedItem(int itemSelectedID) {
-    selectedItemList.remove(itemSelectedID);
+    selectedItemLists.remove(itemSelectedID);
   }
 
   setIsSelectedAllItems() {
-    isSelectedAll.value = !isSelectedAll.value;
+    isSelectedAllItem.value = !isSelectedAllItem.value;
   }
 
   clearAllSelectedItems() {
-    selectedItemList.clear();
+    selectedItemLists.clear();
     update();
   }
 

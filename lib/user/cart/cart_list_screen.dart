@@ -29,14 +29,16 @@ class _CartListScreenState extends State<CartListScreen> {
           'currenOnlineUserID': currentOnlineUser.user.userid.toString(),
         },
       );
+      // print("User ID : ${res.body}");
       if (res.statusCode == 200) {
         var responeBodyOfGetCurrenOnlineUserCartItems = jsonDecode(res.body);
         if (responeBodyOfGetCurrenOnlineUserCartItems['success'] == true) {
-          for (var eachCurrentUserCartItem
+          for (var eachCurrentUserCartItemData
               in (responeBodyOfGetCurrenOnlineUserCartItems[
                   'currentOnlineUserID'] as List)) {
-            cartListOfCurrentUser.add(Cart.fromJson(eachCurrentUserCartItem));
+            cartListOfCurrentUser.add(Cart.fromJson(eachCurrentUserCartItemData));
           }
+          // print('Success');
         } else {
           Fluttertoast.showToast(msg: "Error occured while executing query.");
         }
@@ -46,6 +48,7 @@ class _CartListScreenState extends State<CartListScreen> {
       }
     } catch (e) {
       Fluttertoast.showToast(msg: "Error, ${e.toString()}");
+      // print(e.toString());
     }
     calculateTotalAmoung();
   }
@@ -53,11 +56,11 @@ class _CartListScreenState extends State<CartListScreen> {
   calculateTotalAmoung() {
     cartListController.setTotal(0);
     if (cartListController.selectedItemList.isEmpty) {
-      for (var itemInCart in cartListController.cartList) {
+      for (var itemInCart in cartListController.cartlist) {
         if (cartListController.selectedItemList.contains(itemInCart.itemid)) {
           double eachItemTotalAmoung = itemInCart.price * itemInCart.quantity;
           cartListController
-              .setTotal(cartListController.totalprice + eachItemTotalAmoung);
+              .setTotal(cartListController.total + eachItemTotalAmoung);
         }
       }
     }
@@ -99,12 +102,12 @@ class _CartListScreenState extends State<CartListScreen> {
           ),
         ),
         body: Obx(
-          () => cartListController.cartList.isEmpty
+          () => cartListController.cartlist.isEmpty
               ? ListView.builder(
-                  itemCount: cartListController.cartList.length,
+                  itemCount: cartListController.cartlist.length,
                   scrollDirection: Axis.vertical,
                   itemBuilder: (context, index) {
-                    Cart cartModel = cartListController.cartList[index];
+                    Cart cartModel = cartListController.cartlist[index];
 
                     Item itemModel = Item(
                         cartModel.itemid,
@@ -129,7 +132,7 @@ class _CartListScreenState extends State<CartListScreen> {
                                           .contains(cartModel.itemid)
                                       ? Icons.check_box
                                       : Icons.check_box_outline_blank,
-                                  color: cartListController.isselectedall
+                                  color: cartListController.isSelectedAll
                                       ? Colors.white
                                       : Colors.grey,
                                 ),
@@ -146,7 +149,7 @@ class _CartListScreenState extends State<CartListScreen> {
                                     index == 0 ? 16 : 8,
                                     16,
                                     index ==
-                                            cartListController.cartList.length -
+                                            cartListController.cartlist.length -
                                                 1
                                         ? 16
                                         : 8),
