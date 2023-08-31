@@ -1,4 +1,4 @@
- import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../../user/userPrefereences/current_user.dart';
@@ -69,10 +69,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       _indexNumber.value = value;
                     },
                     iconSize: 35,
-
                     showSelectedLabels: true,
                     showUnselectedLabels: true,
-                    selectedItemColor: Colors.blue,
+                    selectedItemColor: Colors.white,
                     unselectedItemColor: Colors.black,
                     items: List.generate(_fragmentScreen.length, (index) {
                       var navBtnProperty = _navigationButtonsProperties[index];

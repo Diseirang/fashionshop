@@ -408,6 +408,7 @@ class _ItemScreenState extends State<ItemScreen> {
                                   alignment: Alignment.center,
                                   child: Text(
                                     widget.itemInfo.colors![index]
+                                        .toUpperCase()
                                         .replaceAll("[", "")
                                         .replaceAll("]", ""),
                                     style: const TextStyle(

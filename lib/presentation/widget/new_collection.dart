@@ -129,6 +129,10 @@ Widget getAllItemWidget(context) {
                                       ),
                                     ),
                                   ),
+                                  const Text(
+                                    'Rating',
+                                    style: TextStyle(color: Colors.amber),
+                                  ),
                                 ],
                               ),
                               Padding(

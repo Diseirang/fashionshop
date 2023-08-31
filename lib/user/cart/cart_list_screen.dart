@@ -35,19 +35,14 @@ class _CartListScreenState extends State<CartListScreen> {
           'currentOnlineUserID': currentOnlineUser.user.userid.toString(),
         },
       );
-      // print("User ID : ${res.body}");
       if (res.statusCode == 200) {
         var responeBodyOfGetCurrenOnlineUserCartItems = jsonDecode(res.body);
-        print(responeBodyOfGetCurrenOnlineUserCartItems);
         if (responeBodyOfGetCurrenOnlineUserCartItems['success'] == true) {
           for (var eachCurrentUserCartItemData
               in ((responeBodyOfGetCurrenOnlineUserCartItems[
-                      'currenOnlineUserID'] ??
-                  []) as List)) {
+                  'currentUserCartData']) as List)) {
             cartListOfCurrentUser
                 .add(Cart.fromJson(eachCurrentUserCartItemData));
-            print(eachCurrentUserCartItemData);
-            print(cartListOfCurrentUser);
           }
         } else {
           Fluttertoast.showToast(msg: "Error occured while executing query.");
@@ -58,7 +53,6 @@ class _CartListScreenState extends State<CartListScreen> {
       }
     } catch (e) {
       Fluttertoast.showToast(msg: "Error, ${e.toString()}");
-      print(e.toString());
     }
     calculateTotalAmoung();
   }
@@ -68,7 +62,8 @@ class _CartListScreenState extends State<CartListScreen> {
     if (cartListController.selectedItemList.isEmpty) {
       for (var itemInCart in cartListController.cartlist) {
         if (cartListController.selectedItemList.contains(itemInCart.itemid)) {
-          double eachItemTotalAmoung = (itemInCart.price!) * (double.parse(itemInCart.quantity.toString()));
+          double eachItemTotalAmoung = (itemInCart.price!) *
+              (double.parse(itemInCart.quantity.toString()));
           cartListController
               .setTotal(cartListController.total + eachItemTotalAmoung);
         }
@@ -102,17 +97,17 @@ class _CartListScreenState extends State<CartListScreen> {
           automaticallyImplyLeading: false,
           title: const Text(
             'Cart List',
-            style: TextStyle(color: Colors.white, fontSize: 22),
+            style: TextStyle(
+                color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold),
           ),
         ),
         body: Obx(
-          () => cartListController.cartlist.isEmpty
+          () => cartListController.cartList.isNotEmpty
               ? ListView.builder(
                   itemCount: cartListController.cartlist.length,
                   scrollDirection: Axis.vertical,
                   itemBuilder: (context, index) {
                     Cart cartModel = cartListController.cartlist[index];
-
                     Item itemModel = Item(
                         id: cartModel.itemid,
                         name: cartModel.name,
@@ -149,24 +144,13 @@ class _CartListScreenState extends State<CartListScreen> {
                               onTap: () {},
                               child: Container(
                                 margin: EdgeInsets.fromLTRB(
-                                    0,
-                                    index == 0 ? 16 : 8,
-                                    16,
-                                    index ==
-                                            cartListController.cartlist.length -
-                                                1
-                                        ? 16
-                                        : 8),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: Colors.black,
-                                  boxShadow: const [
-                                    BoxShadow(
-                                      offset: Offset(0, 0),
-                                      blurRadius: 6,
-                                      color: Colors.white,
-                                    ),
-                                  ],
+                                  0,
+                                  index == 0 ? 16 : 8,
+                                  16,
+                                  index ==
+                                          cartListController.cartlist.length - 1
+                                      ? 16
+                                      : 8,
                                 ),
                                 child: Row(
                                   children: [
@@ -178,7 +162,7 @@ class _CartListScreenState extends State<CartListScreen> {
                                         children: [
                                           Text(
                                             itemModel.name.toString(),
-                                            maxLines: 2,
+                                            maxLines: 1,
                                             overflow: TextOverflow.ellipsis,
                                             style: const TextStyle(
                                               fontSize: 18,
@@ -197,25 +181,22 @@ class _CartListScreenState extends State<CartListScreen> {
                                                   maxLines: 3,
                                                   overflow:
                                                       TextOverflow.ellipsis,
-                                                  style: const TextStyle(
-                                                    color: Colors.white60,
-                                                  ),
                                                 ),
                                               ),
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                  left: 12.0,
-                                                  right: 12.0,
-                                                ),
-                                                child: Text(
-                                                  '\$ ${itemModel.price.toString()}',
-                                                  style: const TextStyle(
-                                                    fontSize: 20,
-                                                    color: Colors.purpleAccent,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                              ),
+                                              // Padding(
+                                              //   padding: const EdgeInsets.only(
+                                              //     left: 12.0,
+                                              //     right: 12.0,
+                                              //   ),
+                                              //   child: Text(
+                                              //     '\$ ${itemModel.price.toString()}',
+                                              //     style: const TextStyle(
+                                              //       fontSize: 20,
+                                              //       color: Colors.purpleAccent,
+                                              //       fontWeight: FontWeight.bold,
+                                              //     ),
+                                              //   ),
+                                              // ),
                                             ],
                                           )
                                         ],
@@ -226,8 +207,6 @@ class _CartListScreenState extends State<CartListScreen> {
                               ),
                             ),
                           ),
-                        
-                        
                         ],
                       ),
                     );
