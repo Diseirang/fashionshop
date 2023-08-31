@@ -84,26 +84,28 @@ Widget trendingMostPopularItemWidget(context) {
                     child: Column(
                       children: [
                         //item image
-                        ClipRRect(
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(18),
-                            topRight: Radius.circular(18),
-                          ),
-                          child: FadeInImage(
-                            height: 200,
-                            width: 200,
-                            fit: BoxFit.cover,
-                            placeholder:
-                                const AssetImage('assets/placeholder.jpeg'),
-                            image: NetworkImage(eachItemData.image!),
-                            imageErrorBuilder:
-                                (context, error, stackTraceError) {
-                              return const Center(
-                                child: Icon(
-                                  Icons.broken_image_outlined,
-                                ),
-                              );
-                            },
+                        SizedBox(height: 200,width: 200,
+                          child: ClipRRect(
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(18),
+                              topRight: Radius.circular(18),
+                            ),
+                            child: FadeInImage(
+                              height: 200,
+                              width: 200,
+                              fit: BoxFit.cover,
+                              placeholder:
+                                  const AssetImage('assets/placeholder.jpeg'),
+                              image: NetworkImage(eachItemData.image!),
+                              imageErrorBuilder:
+                                  (context, error, stackTraceError) {
+                                return const Center(
+                                  child: Icon(
+                                    Icons.broken_image_outlined,
+                                  ),
+                                );
+                              },
+                            ),
                           ),
                         ),
 

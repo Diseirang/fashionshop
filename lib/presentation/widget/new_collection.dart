@@ -81,27 +81,29 @@ Widget getAllItemWidget(context) {
 
                 child: Row(
                   children: [
-                    ClipRRect(
-                      borderRadius: const BorderRadius.only(
-                        bottomRight: Radius.circular(16),
-                        topRight: Radius.circular(16),
-                        topLeft: Radius.circular(17),
-                        bottomLeft: Radius.circular(17),
-                      ),
-                      child: FadeInImage(
-                        height: 90,
-                        width: 90,
-                        fit: BoxFit.cover,
-                        placeholder:
-                            const AssetImage('assets/placeholder.jpeg'),
-                        image: NetworkImage(eachItemData.image!),
-                        imageErrorBuilder: (context, error, stackTraceError) {
-                          return const Center(
-                            child: Icon(
-                              Icons.broken_image_outlined,
-                            ),
-                          );
-                        },
+                    SizedBox(height: 90,width: 90,
+                      child: ClipRRect(
+                        borderRadius: const BorderRadius.only(
+                          bottomRight: Radius.circular(16),
+                          topRight: Radius.circular(16),
+                          topLeft: Radius.circular(17),
+                          bottomLeft: Radius.circular(17),
+                        ),
+                        child: FadeInImage(
+                          height: 90,
+                          width: 90,
+                          fit: BoxFit.cover,
+                          placeholder:
+                              const AssetImage('assets/placeholder.jpeg'),
+                          image: NetworkImage(eachItemData.image!),
+                          imageErrorBuilder: (context, error, stackTraceError) {
+                            return const Center(
+                              child: Icon(
+                                Icons.broken_image_outlined,
+                              ),
+                            );
+                          },
+                        ),
                       ),
                     ),
                     Expanded(
@@ -113,27 +115,17 @@ Widget getAllItemWidget(context) {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Expanded(
-                                    child: Text(
-                                      eachItemData.name!,
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: const TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
+                              Expanded(
+                                child: Text(
+                                  eachItemData.name!,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                  const Text(
-                                    'Rating',
-                                    style: TextStyle(color: Colors.amber),
-                                  ),
-                                ],
+                                ),
                               ),
                               Padding(
                                 padding:
@@ -181,15 +173,18 @@ Widget getAllItemWidget(context) {
                                   ],
                                 ),
                               ),
-                              Text(
-                                ' ${eachItemData.tags}'
-                                    .toString()
-                                    .replaceAll('[', '')
-                                    .replaceAll(']', ''),
-                                style: TextStyle(
-                                  color: ColorManager.grey,
-                                  fontSize: 12,
-                                  // fontWeight: FontWeight.bold,
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 5.0),
+                                child: Text(
+                                  ' ${eachItemData.tags}'
+                                      .toString()
+                                      .replaceAll('[', '')
+                                      .replaceAll(']', ''),
+                                  style: TextStyle(
+                                    color: ColorManager.grey,
+                                    fontSize: 12,
+                                    // fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
                             ],

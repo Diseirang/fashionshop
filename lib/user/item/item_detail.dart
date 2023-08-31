@@ -33,10 +33,10 @@ class _ItemScreenState extends State<ItemScreen> {
           'item_id': widget.itemInfo.id.toString(),
           'quantity': itemDetailsController.quantity.toString(),
           'color': widget.itemInfo.colors![itemDetailsController.color]
-              .replaceAll('[', '')
+              .replaceAll('[', '').replaceAll(' ', '')
               .replaceAll(']', ''),
           'size': widget.itemInfo.sizes![itemDetailsController.size]
-              .replaceAll('[', '')
+              .replaceAll('[', '').replaceAll(' ', '')
               .replaceAll(']', ''),
         },
       );
