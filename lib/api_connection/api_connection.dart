@@ -1,8 +1,8 @@
 class API {
-  static const hostConnect =
-      "http://10.21.0.18:8080/api_fashionshop/"; //Ubuntu localhost
   // static const hostConnect =
-  // "http://192.168.0.106:8080/api_fashionshop"; //Windows10 localhost
+  //     "http://10.21.0.18:8080/api_fashionshop/"; //Ubuntu localhost
+  static const hostConnect =
+  "http://192.168.0.108:8080/api_fashionshop"; //Windows10 localhost
 
   static const hostConnectUser = "$hostConnect/user";
   static const hostConnectAdmin = "$hostConnect/admin";

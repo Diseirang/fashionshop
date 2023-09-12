@@ -27,6 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return WillPopScope(
       onWillPop: () async {
         SystemNavigator.pop();
+        Get.back();
         return false;
       },
       child: Scaffold(
@@ -52,10 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ],
           automaticallyImplyLeading: false,
-          title: Text(
-            'Welcome, ${_currentUser.user.username}',
-            style: const TextStyle(color: Colors.white, fontSize: 22),
-          ),
+          title: Image.asset('assets/Login.png'),
         ),
         body: SingleChildScrollView(
           child: Column(

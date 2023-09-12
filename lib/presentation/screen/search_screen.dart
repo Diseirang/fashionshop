@@ -26,7 +26,8 @@ class _SearchScreenState extends State<SearchScreen> {
               color: Colors.white,
             ),
           ),
-          actions: <Widget>[TextFormField()],
+          title: showSearchBar(),
+          // actions: <Widget>[TextFormField()],
         ),
         // bottomNavigationBar: showSearchBar(),
         resizeToAvoidBottomInset: true,
@@ -35,33 +36,30 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   Widget showSearchBar() {
-    return Padding(
-      padding: const EdgeInsets.only(left: 10, right: 10, top: 5),
-      child: TextField(
-        style: getRegularStyle(color: ColorManager.grey),
-        controller: searchController,
-        decoration: InputDecoration(
-          prefixIcon: IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.search),
-          ),
-          hintText: 'Search the best product here...',
-          hintStyle: const TextStyle(color: Colors.grey, fontSize: AppSize.s16),
-          suffixIcon: IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.shopping_cart),
-          ),
-          border: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: ColorManager.white,
-              width: 10,
-            ),
-          ),
-          enabledBorder: enabledBorder,
-          disabledBorder: disabledBorder,
-          focusedBorder: focuseBorder,
-          contentPadding: contentPadding,
+    return TextField(
+      style: getRegularStyle(color: ColorManager.grey),
+      controller: searchController,
+      decoration: InputDecoration(
+        prefixIcon: IconButton(
+          onPressed: () {},
+          icon: const Icon(Icons.search),
         ),
+        hintText: 'Search the best product here...',
+        hintStyle: const TextStyle(color: Colors.grey, fontSize: AppSize.s16),
+        suffixIcon: IconButton(
+          onPressed: () {},
+          icon: const Icon(Icons.shopping_cart),
+        ),
+        border: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: ColorManager.white,
+            width: 10,
+          ),
+        ),
+        enabledBorder: enabledBorder,
+        disabledBorder: disabledBorder,
+        focusedBorder: focuseBorder,
+        contentPadding: contentPadding,
       ),
     );
   }
