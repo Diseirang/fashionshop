@@ -34,7 +34,7 @@ class _LoginScreenState extends State<LoginScreen> {
         Uri.parse(API.userlogin),
         body: {
           'user_name': phoneController.text.trim(),
-          'user_password': passwordController.text.trim(),
+          'user_password': passwordController.text,
         },
       );
 
